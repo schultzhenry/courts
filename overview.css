@@ -1,0 +1,169 @@
+:root {
+  --border-color: whiteSmoke;
+  --outer-border: 12px;
+  --inner-border: Calc(Var(--outer-border));
+  --left-width: 100%;
+  --right-width: 0%;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background: white;
+}
+
+* {
+  font-family: 'EB Garamond', serif;
+  line-height: 1.15em;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+#view {
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+#left-panel {
+  width: Var(--left-width);
+}
+#right-panel {
+  width: Var(--right-width);
+}
+
+#left-panel, #right-panel {
+  transition: all 0.6s;
+  overflow: hidden;
+  top: 0px;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header, .footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: Var(--border-color);
+}
+
+.header {
+  height: 6%;
+}
+
+.vis {
+  border-left: Var(--outer-border) solid Var(--border-color);
+  border-right: Var(--outer-border) solid Var(--border-color);
+  border-bottom: Var(--outer-border) solid Var(--border-color);
+  width: 100%;
+  height: Calc(94%);
+}
+
+#left-vis {
+  border-right: Var(--inner-border) solid Var(--border-color);
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  text-align: center;
+}
+
+#right-vis {
+  border-left: Var(--inner-border) solid Var(--border-color);
+}
+
+h1 {
+  transition: all 0.6s;
+  text-align: center;
+  font-weight: 500;
+  font-size: 32px;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 22px;
+}
+
+#right-panel-toggle {
+  transition: all 0.6s;
+  text-align: center;
+  position: fixed;
+  top: Calc(50% - (Var(--outer-border) * 2));
+  right: Calc(Var(--outer-border) - 1px);
+  background: Var(--border-color);
+  width: Calc(Var(--outer-border) * 3);
+  height: Calc(Var(--outer-border) * 4);
+}
+
+svg {
+  display: block;
+  margin: auto;
+  overflow: hidden;
+}
+
+.court {
+  height: 18px;
+  width: 42px;
+  border: 1px solid lightGrey;
+  margin: auto;
+  transition: all 0.2s;
+  background: whiteSmoke;
+}
+.court:hover {
+  border: 1px solid black;
+}
+.court-space {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.court-label {
+  text-align: center;
+  font-family: monospace;
+  font-size: 9px;
+  padding: 0px;
+  margin: 4px;
+}
+.appellate-column {
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  flex-basis: 106px;
+  flex-grow: 0;
+}
+#supreme-level, #appeals-level, #district-level {
+
+}
+
+path {
+  color: red;
+}
+
+#map-vis {
+  border: 1px solid grey;
+  position: fixed;
+  bottom: 6%;
+  left: Var(--outer-border);
+}
+
+.judges-thumbnail {
+  overflow:visible;
+}

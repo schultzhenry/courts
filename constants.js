@@ -1,0 +1,130 @@
+var fileName = "Aggregate Court Size Data - Judgeships by Court.csv";
+
+var supreme_dictionary = [
+  { name: 'Supreme Court', column: 'N/A', size: 9 }
+]
+
+var appellate_dictionary = [
+  { name: 'DC',               column: 'DC',               size: 11 },
+  { name: 'First Circuit',    column: 'First Circuit',    size: 6 },
+  { name: 'Second Circuit',   column: 'Second Circuit',   size: 13 },
+  { name: 'Third Circuit',    column: 'Third Circuit',    size: 14 },
+  { name: 'Fourth Circuit',   column: 'Fourth Circuit',   size: 15 },
+  { name: 'Fifth Circuit',    column: 'Fifth Circuit',    size: 17 },
+  { name: 'Sixth Circuit',    column: 'Sixth Circuit',    size: 16 },
+  { name: 'Seventh Circuit',  column: 'Seventh Circuit',  size: 11 },
+  { name: 'Eighth Circuit',   column: 'Eighth Circuit',   size: 11 },
+  { name: 'Ninth Circuit',    column: 'Ninth Circuit',    size: 29 },
+  { name: 'Tenth Circuit',    column: 'Tenth Circuit',    size: 12 },
+  { name: 'Eleventh Circuit', column: 'Eleventh Circuit', size: 12 },
+  { name: 'Federal Circuit',  column: 'Federal Circuit',  size: 12 }
+];
+
+var district_dictionary = [
+
+  { name: "DC",               column: "DC",               size: 15},
+
+  { name: "MA",               column: "First Circuit",    size: 13 },
+  { name: "ME",               column: "First Circuit",    size: 3 },
+  { name: "NH",               column: "First Circuit",    size: 3 },
+  { name: "PR",               column: "First Circuit",    size: 7 },
+  { name: "RI",               column: "First Circuit",    size: 3 },
+
+  { name: "CT",               column: "Second Circuit",   size: 8 },
+  { name: "NY Eastern",       column: "Second Circuit",   size: 15 },
+  { name: "NY Northern",      column: "Second Circuit",   size: 5 },
+  { name: "NY Southern",      column: "Second Circuit",   size: 28 },
+  { name: "NY Western",       column: "Second Circuit",   size: 4 },
+  { name: "VT",               column: "Second Circuit",   size: 2 },
+
+  { name: "DE",               column: "Third Circuit",    size: 4 },
+  { name: "NJ",               column: "Third Circuit",    size: 17 },
+  { name: "PA Eastern",       column: "Third Circuit",    size: 22 },
+  { name: "PA Middle",        column: "Third Circuit",    size: 6 },
+  { name: "PA Western",       column: "Third Circuit",    size: 10 },
+  { name: "Virgin Islands",   column: "Third Circuit",    size: 2 },
+
+  { name: "MD",               column: "Fourth Circuit",   size: 10 },
+  { name: "NC Eastern",       column: "Fourth Circuit",   size: 4 },
+  { name: "NC Middle",        column: "Fourth Circuit",   size: 4 },
+  { name: "NC Western",       column: "Fourth Circuit",   size: 5 },
+  { name: "SC",               column: "Fourth Circuit",   size: 10 },
+  { name: "VA Eastern",       column: "Fourth Circuit",   size: 11 },
+  { name: "VA Western",       column: "Fourth Circuit",   size: 4 },
+  { name: "WV Northern",      column: "Fourth Circuit",   size: 3 },
+  { name: "WV Southern",      column: "Fourth Circuit",   size: 5 },
+
+  { name: "LA Eastern",       column: "Fifth Circuit", size: 12 },
+  { name: "LA Middle",        column: "Fifth Circuit", size: 3 },
+  { name: "LA Western",       column: "Fifth Circuit", size: 7 },
+  { name: "MS Northern",      column: "Fifth Circuit", size: 3 },
+  { name: "MS Southern",      column: "Fifth Circuit", size: 6 },
+  { name: "TX Eastern",       column: "Fifth Circuit", size: 8 },
+  { name: "TX Northern",      column: "Fifth Circuit", size: 12 },
+  { name: "TX Southern",      column: "Fifth Circuit", size: 19 },
+  { name: "TX Western",       column: "Fifth Circuit", size: 13 },
+
+  { name: "KY Eastern",       column: "Sixth Circuit", size: 6 },
+  { name: "KY Western",       column: "Sixth Circuit", size: 5 },
+  { name: "OH Northern", column: "Sixth Circuit", size: 11 },
+  { name: "OH Southern", column: "Sixth Circuit", size: 8 },
+  { name: "MI Eastern", column: "Sixth Circuit", size: 15 },
+  { name: "MI Western", column: "Sixth Circuit", size: 4 },
+  { name: "TN Eastern", column: "Sixth Circuit", size: 5 },
+  { name: "TN Middle", column: "Sixth Circuit", size: 4 },
+  { name: "TN Western", column: "Sixth Circuit", size: 5 },
+
+  { name: "IL Central", column: "Seventh Circuit", size: 4 },
+  { name: "IL Northern", column: "Seventh Circuit", size: 22 },
+  { name: "IL Southern", column: "Seventh Circuit", size: 4 },
+  { name: "IN Northern", column: "Seventh Circuit", size: 5 },
+  { name: "IN Southern", column: "Seventh Circuit", size: 5 },
+  { name: "WI Eastern", column: "Seventh Circuit", size: 5 },
+  { name: "WI Western", column: "Seventh Circuit", size: 2 },
+
+  { name: "AR Eastern", column: "Eighth Circuit", size: 5 },
+  { name: "AR Western", column: "Eighth Circuit", size: 3 },
+  { name: "IA Northern", column: "Eighth Circuit", size: 2 },
+  { name: "IA Southern", column: "Eighth Circuit", size: 3 },
+  { name: "MN", column: "Eighth Circuit", size: 7 },
+  { name: "MO Western", column: "Eighth Circuit", size: 7 },
+  { name: "MO Eastern", column: "Eighth Circuit", size: 9 },
+  { name: "ND", column: "Eighth Circuit", size: 2 },
+  { name: "NE", column: "Eighth Circuit", size: 3 },
+  { name: "SD", column: "Eighth Circuit", size: 3 },
+
+  { name: "AK", column: "Ninth Circuit", size: 3 },
+  { name: "AZ", column: "Ninth Circuit", size: 13 },
+  { name: "CA Central", column: "Ninth Circuit", size: 28 },
+  { name: "CA Eastern", column: "Ninth Circuit", size: 6 },
+  { name: "CA Northern", column: "Ninth Circuit", size: 14 },
+  { name: "CA Southern", column: "Ninth Circuit", size: 13 },
+  { name: "Guam", column: "Ninth Circuit", size: 1 },
+  { name: "HI", column: "Ninth Circuit", size: 4 },
+  { name: "ID", column: "Ninth Circuit", size: 2 },
+  { name: "MP", column: "Ninth Circuit", size: 1 },
+  { name: "MT", column: "Ninth Circuit", size: 3 },
+  { name: "NV", column: "Ninth Circuit", size: 7 },
+  { name: "OR", column: "Ninth Circuit", size: 6 },
+  { name: "WA Eastern", column: "Ninth Circuit", size: 4 },
+  { name: "WA Western", column: "Ninth Circuit", size: 7 },
+
+  { name: "CO", column: "Tenth Circuit", size: 7 },
+  { name: "KS", column: "Tenth Circuit", size: 6 },
+  { name: "OK Eastern", column: "Tenth Circuit", size: 2 },
+  { name: "OK Northern", column: "Tenth Circuit", size: 4 },
+  { name: "OK Western", column: "Tenth Circuit", size: 7 },
+  { name: "NM", column: "Tenth Circuit", size: 7 },
+  { name: "UT", column: "Tenth Circuit", size: 5 },
+  { name: "WY", column: "Tenth Circuit", size: 3 },
+
+  { name: "AL Middle", column: "Eleventh Circuit", size: 3 },
+  { name: "AL Northern", column: "Eleventh Circuit", size: 8 },
+  { name: "AL Southern", column: "Eleventh Circuit", size: 3 },
+  { name: "GA Middle", column: "Eleventh Circuit", size: 4 },
+  { name: "GA Northern", column: "Eleventh Circuit", size: 11 },
+  { name: "GA Southern", column: "Eleventh Circuit", size: 3 },
+  { name: "FL Middle", column: "Eleventh Circuit", size: 15 },
+  { name: "FL Northern", column: "Eleventh Circuit", size: 4 },
+  { name: "FL Southern", column: "Eleventh Circuit", size: 18 }
+]
