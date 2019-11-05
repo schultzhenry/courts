@@ -167,3 +167,7 @@ path {
 .judges-thumbnail {
   overflow:visible;
 }
+
+.active-court {
+  border: 1px solid black;
+}

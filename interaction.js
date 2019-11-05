@@ -39,8 +39,8 @@ $('#right-panel-toggle').click(function() {
 });
 
 $('.court').click(function() {
-  this.style.border = '1px solid black';
-  console.log(this.id);
+  $('.court').removeClass('active-court');
+  $(this).addClass('active-court');
   openRightPanel();
   $('#right-header > h1').text(this.id.replace('-', ' '));
 });
