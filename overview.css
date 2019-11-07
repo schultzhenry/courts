@@ -124,9 +124,16 @@ svg {
   background: whiteSmoke;
 }
 .court:hover, .active-hover {
-  background: rgba(255,255,0,.5);
+  background: yellow;
   border: 1px solid black;
 }
+
+.district.active-hover {
+  fill: yellow;
+  stroke-width: 1px;
+  z-index: 1000;
+}
+
 .court-space {
   display: flex;
   flex: 1;
@@ -135,6 +142,7 @@ svg {
 }
 
 .court-label {
+  pointer-events: none;
   text-align: center;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 12px;
@@ -153,10 +161,6 @@ svg {
 
 }
 
-path {
-  color: red;
-}
-
 #map-vis {
   position: fixed;
   bottom: Var(--outer-border);
@@ -172,19 +176,24 @@ path {
 }
 
 .county {
-  fill: white;
-  stroke: lightGrey;
-  stroke-width: .5px;
+  fill: whiteSmoke;
+  stroke: white;
+  stroke-width: 1px;
   pointer-events: none;
   z-index: 10;
 }
 
 .district {
+  transition: all 0.05s;
   fill: none;
   stroke: black;
   stroke-width: .5px;
   z-index: 11;
   pointer-events: fill;
+}
+
+rect.district {
+  fill: whiteSmoke;
 }
 
 path.district:hover, .district:hover {
@@ -193,6 +202,21 @@ path.district:hover, .district:hover {
   transition: all 0.2s;
 }
 
+.district.inactive-hover {
+  stroke: lightGrey;
+}
+
+text.district {
+  pointer-events: none;
+  fill: black;
+  stroke: none;
+  color: black;
+}
+
+text.district.inactive-hover {
+  fill: lightGrey;
+  stroke: none;
+}
 
 svg text {
   pointer-events: none;

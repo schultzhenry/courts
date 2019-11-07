@@ -8,7 +8,7 @@
   <!-- <script src="https://d3js.org/d3-scale-chromatic.v0.3.min.js"></script> -->
   <script src="https://d3js.org/topojson.v2.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:300,300i,400,400i&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:400,400i&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-composite-projections/1.0.1/d3-composite-projections.min.js"></script> -->
   <link rel="stylesheet" type ="text/css" href ="overview.css"/>
@@ -108,7 +108,7 @@
         // ADD APPROPRIATE NUMBER OF COURTS PER GROUP
         group.selectAll('.court')
           .data(d => d.values).enter()
-          .append('div').attr('class', function(d) { return 'court '+String(d.jdcode).split(',').join(' '); })
+          .append('div').attr('class', function(d) { return 'court c'+String(d.jdcode).split(',').join(' c'); })
           .attr("id", function(d) { return f(d.name); });
         // COURT LABELS
         group.data(appellate_dictionary)
@@ -138,7 +138,7 @@
         	.data(d => d.values).enter()
         	.append('div').attr('class', 'court-box')
           .attr("id", function(d) { return f(d.name)+'-box'; })
-          .append('div').attr('class', function(d) { return 'court '+String(d.jdcode); })
+          .append('div').attr('class', function(d) { return 'court c'+String(d.jdcode); })
           .attr("id", function(d) { return f(d.name); });
         // ADD LABELS
         selection.selectAll('.court-box')
@@ -159,7 +159,7 @@
           .data(supreme_dictionary)
           .enter().append("div")
           .attr("id", function(d) { return d.name;})
-          .attr('class', function(d) { return 'court '+String(d.jdcode).split(',').join(' '); });
+          .attr('class', function(d) { return 'court c'+String(d.jdcode).split(',').join(' c'); });
 
         selection.selectAll('.court-label')
           .data(supreme_dictionary)
