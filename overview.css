@@ -187,7 +187,13 @@ path {
   pointer-events: fill;
 }
 
+
 path.district:hover {
   fill: Yellow;
   fill-opacity: 0.5;
+}
+
+svg text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
 }
