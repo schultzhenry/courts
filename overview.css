@@ -79,7 +79,6 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   text-align: center;
 }
 
@@ -125,6 +124,7 @@ svg {
   background: whiteSmoke;
 }
 .court:hover {
+  background: rgba(255,255,0,.5);
   border: 1px solid black;
 }
 .court-space {
@@ -136,8 +136,8 @@ svg {
 
 .court-label {
   text-align: center;
-  font-family: monospace;
-  font-size: 9px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
   padding: 0px;
   margin: 4px;
 }
@@ -158,9 +158,8 @@ path {
 }
 
 #map-vis {
-  border: 1px solid grey;
   position: fixed;
-  bottom: 6%;
+  bottom: Var(--outer-border);
   left: Var(--outer-border);
 }
 
@@ -170,4 +169,25 @@ path {
 
 .active-court {
   border: 1px solid black;
+}
+
+.county {
+  fill: white;
+  stroke: lightGrey;
+  stroke-width: .5px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.district {
+  fill: none;
+  stroke: black;
+  stroke-width: .5px;
+  z-index: 11;
+  pointer-events: fill;
+}
+
+path.district:hover {
+  fill: Yellow;
+  fill-opacity: 0.5;
 }
