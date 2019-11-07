@@ -44,3 +44,15 @@ $('.court').click(function() {
   openRightPanel();
   $('#right-header > h1').text(this.id.replace('-', ' '));
 });
+
+// $('path.district').hover(function() {
+//   console.log("hey");
+//   console.log($(this).attr('id'));
+// });
+
+$(document).on('mouseenter','.district', function (event) {
+  console.log($( this ).attr('id'));
+  $('.'+String($( this ).attr('id'))).addClass('active-hover');
+}).on('mouseleave','.district',  function(){
+  $('.'+String($( this ).attr('id'))).removeClass('active-hover');
+});

@@ -91,8 +91,7 @@
         .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(w - radius, d.x)); })
         .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(h - radius, d.y)) * 0.97; });
       }
-      simulation.nodes(nodes)
-        .on("tick", ticked);
+      simulation.nodes(nodes).on("tick", ticked);
     }
 
     function loadLevel(level, name) {
@@ -109,7 +108,7 @@
         // ADD APPROPRIATE NUMBER OF COURTS PER GROUP
         group.selectAll('.court')
           .data(d => d.values).enter()
-          .append('div').attr('class', 'court')
+          .append('div').attr('class', function(d) { return 'court '+String(d.jdcode).split(',').join(' '); })
           .attr("id", function(d) { return f(d.name); });
         // COURT LABELS
         group.data(appellate_dictionary)
@@ -139,7 +138,7 @@
         	.data(d => d.values).enter()
         	.append('div').attr('class', 'court-box')
           .attr("id", function(d) { return f(d.name)+'-box'; })
-          .append('div').attr('class', 'court')
+          .append('div').attr('class', function(d) { return 'court '+String(d.jdcode); })
           .attr("id", function(d) { return f(d.name); });
         // ADD LABELS
         selection.selectAll('.court-box')

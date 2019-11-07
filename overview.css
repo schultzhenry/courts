@@ -123,7 +123,7 @@ svg {
   transition: all 0.2s;
   background: whiteSmoke;
 }
-.court:hover {
+.court:hover, .active-hover {
   background: rgba(255,255,0,.5);
   border: 1px solid black;
 }
@@ -187,13 +187,15 @@ path {
   pointer-events: fill;
 }
 
-
-path.district:hover {
+path.district:hover, .district:hover {
   fill: Yellow;
   fill-opacity: 0.5;
+  transition: all 0.2s;
 }
 
+
 svg text {
+  pointer-events: none;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 11px;
 }
