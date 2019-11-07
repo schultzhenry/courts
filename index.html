@@ -55,7 +55,6 @@
     function f(string) {
       return string.replace(' ', '-');
     }
-
     function populateJudges(selection, name, size) {
       // CONSTANTS
       var w = 42;
@@ -93,7 +92,6 @@
       }
       simulation.nodes(nodes).on("tick", ticked);
     }
-
     function loadLevel(level, name) {
       var selection = d3.select("#"+level+"-level .court-space");
       if (level === 'appellate' ) {
@@ -159,8 +157,9 @@
           .data(supreme_dictionary)
           .enter().append("div")
           .attr("id", function(d) { return d.name;})
-          .attr("class", "court");
+          .attr('class', function(d) { return 'court '+String(d.jdcode).split(',').join(' '); });
 
+          console.log(supreme_dictionary[0].jdcode);
         selection.selectAll('.court-label')
           .data(supreme_dictionary)
           .enter()
@@ -168,8 +167,6 @@
           .attr('class', 'court-label')
           .attr('id', level+'-label' )
           .text(function(d) { return d.name; });
-
-        populateJudges(selection, 'supreme', supreme_dictionary[0].size);
       }
     };
 
