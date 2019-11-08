@@ -2,6 +2,9 @@
 
 var rightPanelOpen = false;
 
+
+
+
 function toggleRightPanel() {
   console.log("clicked!");
   if (rightPanelOpen == false) {
@@ -27,6 +30,9 @@ function toggleRightPanel() {
   }
 }
 
+
+
+
 function openRightPanel() {
   document.documentElement.style.setProperty('--inner-border', "Calc(Var(--outer-border) / 2)");
   document.documentElement.style.setProperty('--left-width', "50%");
@@ -36,13 +42,22 @@ function openRightPanel() {
   rightPanelOpen = true;
 }
 
+
+
+// Open/close right panel on toggle click
 $('#right-panel-toggle').click(function() {
   toggleRightPanel();
+  $('*').removeClass('active-court');
 });
 
+
+
+
+// Open right panel on court click
 $('.court').click(function() {
   $('.court').removeClass('active-court');
   $(this).addClass('active-court');
+  $(this).removeClass('active-hover');
   openRightPanel();
   $('#right-header > h1').text(this.id.replace('-', ' '));
 });
@@ -61,6 +76,8 @@ $(document).on('mouseenter','.district', function (event) {
   else if ($(this).get(0).tagName == 'path') {
     // Grey out other districts
     $('.district').addClass('inactive-hover');
+    $('.judges-thumbnail').addClass('inactive-hover');
+    $('.court-label').addClass('inactive-hover');
 
     // Add copy of district on top of svg and highlight
     var temp = $(this).clone().appendTo($(this).parent())
@@ -69,6 +86,9 @@ $(document).on('mouseenter','.district', function (event) {
 
     // Highlight corresponding courts
     $('.'+String($( this ).attr('id'))).addClass('active-hover');
+    $('.'+String($( this ).attr('id'))+' .judges-thumbnail').removeClass('inactive-hover');
+    $('.'+String($( this ).attr('id'))).siblings().removeClass('inactive-hover');
+    $('.active-court .judges-thumbnail').removeClass('inactive-hover');
 
     return;
   }
@@ -76,6 +96,8 @@ $(document).on('mouseenter','.district', function (event) {
 
     // Grey out other districts
     $('.district').addClass('inactive-hover');
+    $('.judges-thumbnail').addClass('inactive-hover');
+    $('.court-label').addClass('inactive-hover');
 
     // Highlight district boundary and text
     $('#'+String($( this ).attr('id'))).removeClass('inactive-hover').addClass('active-hover');
@@ -83,10 +105,17 @@ $(document).on('mouseenter','.district', function (event) {
 
     // Highlight corresponding courts
     $('.'+String($( this ).attr('id'))).addClass('active-hover');
+    $('.'+String($( this ).attr('id'))+' .judges-thumbnail').removeClass('inactive-hover');
+    $('.'+String($( this ).attr('id'))).siblings().removeClass('inactive-hover');
+    $('.active-court .judges-thumbnail').removeClass('inactive-hover');
 
   }
 
 }).on('mouseleave','.district',  function() {
+
+  // Remove grey from courts
+  $('.judges-thumbnail').removeClass('inactive-hover');
+  $('.court-label').removeClass('inactive-hover');
 
   // Do nothing if hovering over territory label
   if ($(this).get(0).tagName == 'text') {

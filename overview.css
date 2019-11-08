@@ -123,6 +123,7 @@ svg {
   transition: all 0.2s;
   background: whiteSmoke;
 }
+
 .court:hover, .active-hover {
   background: yellow;
   border: 1px solid black;
@@ -172,6 +173,7 @@ svg {
 }
 
 .active-court {
+  background: GreenYellow;
   border: 1px solid black;
 }
 
@@ -206,6 +208,10 @@ path.district:hover, .district:hover {
   stroke: lightGrey;
 }
 
+p.inactive-hover {
+  color: lightGrey;
+}
+
 text.district {
   pointer-events: none;
   fill: black;
@@ -213,7 +219,7 @@ text.district {
   color: black;
 }
 
-text.district.inactive-hover {
+.inactive-hover circle, text.district.inactive-hover {
   fill: lightGrey;
   stroke: none;
 }
