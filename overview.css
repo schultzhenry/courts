@@ -116,7 +116,7 @@ h1 {
 h2 {
   font-weight: 400;
   font-size: 22px;
-  margin-top: 0px;
+  margin: 10px;
 }
 
 #right-panel-toggle {
