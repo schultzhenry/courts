@@ -2,23 +2,19 @@
 // DATA SOURCE: FEDERAL JUDICIAL CENTER
 // fjc.gov/history/judges/biographical-directory-article-iii-federal-judges-export
 
-console.log('Hang on a moment; loading judge & court data...');
+console.log('Hang on a moment; loading data...');
+
+// FORMAT
+function f(s) { return s.replace(' ', '-'); }
 
 
-function f(s) {
-  return s.replace(' ', '-');
-}
-
-
-(async function () {
+async function loadData() {
 
   // LOAD CSV JUDGE DATA
   d3.csv('data/federal-judicial-service.csv', function(federal_judicial_service) {
     d3.csv('data/judges.csv', function(judges) {
-
       // MERGE POSITION-BASED AND BIOGRAPHY-BASED DATASETS INTO ONE ARRAY
       // var all_judges = judges.map(x => Object.assign(x, federal_judicial_service.find(y => y.nid == x.nid)));
-
       // GROUP JUDGE DATA BY COURT
       let group = federal_judicial_service.reduce((r, a) => {
         r[a['Court Name']] = [...r[a['Court Name']] || [], a];
@@ -63,7 +59,7 @@ function f(s) {
         var h = 24;
         var pad = 2;
         var center = {x: w/2, y: h/2};
-        var forceStrength = 0.2;
+        var forceStrength = 0.05;
         var radius = 2.7;
         // APPEND SVG
         var svg = selection.selectAll(".court")
@@ -77,10 +73,10 @@ function f(s) {
         // CREATE SIMULATION
         var simulation = d3.forceSimulation(nodes)
           .velocityDecay(0.1)
-          .force('center', d3.forceCenter(w / 2, h / 2))
+          .force('center', d3.forceCenter(w/2, h/2))
           .force("x", d3.forceX().strength(forceStrength).x(center.x))
           .force("y", d3.forceY().strength(forceStrength).y(center.y))
-          .force("collide", d3.forceCollide().radius(function(d) { return d.r * 1.25; }).iterations(1))
+          .force("collide", d3.forceCollide().radius(function(d) { return d.r * 1.2; }).iterations(10))
           .on("tick", ticked);
         // ADD NODES TO SVG
         var node = svg.append("g")
@@ -187,4 +183,8 @@ function f(s) {
 
     });
   });
-})();
+};
+
+loadData();
+setTimeout(function(){ console.log('Vis loaded. Binding interactions to vis...'); }, 700);
+setTimeout(function(){ bindInteraction(); }, 700);

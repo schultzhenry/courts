@@ -139,17 +139,17 @@ svg {
 }
 
 .court {
-  height: 24px;
-  /* max-width: 48px; */
-  max-width: 56px;
+  height: 25px;
+  max-width: 55px;
   border: 0.5px solid lightGrey;
   margin: auto;
   transition: all 0.2s;
   background: whiteSmoke;
+  z-index: 1000;
 }
 
 .court:hover, .active-hover {
-  background: yellow;
+  background: lightyellow;
   border: 1px solid black;
 }
 
@@ -171,11 +171,11 @@ svg {
   pointer-events: none;
   text-align: center;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   padding: 0px;
   margin: 0px;
-  padding-top: 1px;
-  padding-bottom: 8px;
+  padding-top: 2px;
+  padding-bottom: 6px;
 }
 .appellate-column {
   flex: 1;
@@ -260,11 +260,22 @@ svg text {
 circle.Republican {
   fill: red;
 }
+.inactive-hover circle.Republican {
+  fill: #ffcccc;
+}
+
+.inactive-hover circle.Democratic {
+  fill: #cce0ff;
+}
 
 circle.Democratic {
-  fill: blue;
+  fill: dodgerblue;
 }
 
 circle {
   pointer-events: none;
+}
+
+.court {
+  pointer-events: all;
 }
