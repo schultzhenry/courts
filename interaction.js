@@ -14,7 +14,7 @@ function bindInteraction() {
         $('#right-panel-toggle').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
         $('#right-panel-toggle').children("#right-panel-toggle-text").text("→");
         setTimeout(function() {
-          $("#right-header").children("h1").text("N/A");
+          $("#right-header").children("h1").text("Select a Court on the Left to View Details");
         }, 550);
         rightPanelOpen = true;
       } else {

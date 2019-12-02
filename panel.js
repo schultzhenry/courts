@@ -41,13 +41,11 @@ function formatJudgeData(d, name) {
 
 function populateRightPanel(n, c) {
 
-  $('#right-header > h1').text(n);          // Make header court name
+  let lnamel = findCourtData(n)['lname'];
+  if (Array.isArray(lnamel)) { lnamel = lnamel[1]; };
+
+  $('#right-header > h1').text(lnamel);          // Make header court name
   let data = findCourtData(n);              // Get judge data for court
-
-  if (n === 'DC') { data = (c === 'court-box') ? district_dictionary[0] : appellate_dictionary[0]; };
-
-  console.log(data);
-  console.log('loading table');
 
   // Remove existing table and create new
   d3.select('#judge-table-space')
