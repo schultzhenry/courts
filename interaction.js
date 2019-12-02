@@ -125,11 +125,8 @@ function bindInteraction() {
 
 
     $('#map-button').click(function() {
-      if (!$(this).is(':checked')) {
-        $('#map-vis').addClass('hidden');
-      } else {
-        $('#map-vis').removeClass('hidden');
-      }
+      if (!$(this).is(':checked')) { $('#map-vis').addClass('hidden'); }
+      else                         { $('#map-vis').removeClass('hidden'); }
     });
 
     $('#judge-fill-button').click(function() {

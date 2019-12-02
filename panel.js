@@ -13,11 +13,11 @@ function findCourt(name) {
   return;
 }
 
-function findCourtData(name) {
-  for (dictionary of [ supreme_dictionary, appellate_dictionary, district_dictionary ]) {
-    for (i of dictionary) { if (name === i['name']) { return i; } }
+function findCourtData(n) {
+  for (d of [ supreme_dictionary, appellate_dictionary, district_dictionary ]) {
+    for (i of d) { if (n === i['name']) { return i; } }
   }
-  console.log('Could not find court data for '+name+'.');
+  console.log('Could not find court data for '+n+'.');
   return;
 }
 
@@ -49,7 +49,7 @@ function populateRightPanel(n, c) {
 
   // Remove existing table and create new
   d3.select('#judge-table-space')
-    .selectAll('*')
+    .selectAll('table')
     .remove()
   var t = d3.select('#judge-table-space')
     .append('table')
@@ -63,8 +63,9 @@ function populateRightPanel(n, c) {
 
   // Populate table body with judge data
   setTimeout(function(){
-    t.append('tbody')
-       .selectAll('tr')
+    var body = t.append('tbody');
+
+    body.selectAll('tr')
        .data((toggleAllJudges == false) ? data['judges_curr'] : data['judges']).enter()
        .append('tr')
        .selectAll('td')
@@ -80,5 +81,15 @@ function populateRightPanel(n, c) {
        }).enter()
        .append('td')
        .text(function(d) { return d; });
-  }, 200);
+
+    body.selectAll('tr.vacancy')
+      .data(Array(data['size'] - data['size_curr'])).enter()
+      .append('tr')
+      .selectAll('td')
+      .data(['Vacancy','—','—','—','—','—']).enter()
+      .append('td')
+      .attr('class', 'vacancy')
+      .text(function(d) { return d; });
+
+  }, 100);
 }
