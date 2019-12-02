@@ -66,7 +66,7 @@ async function loadData() {
       function populateJudges(level, selection, name, size) {
 
         // CONSTANTS
-        var w = 44;
+        var w = 50;
         var h = 26;
         var pad = 2;
         var center = {x: w/2, y: h/2};

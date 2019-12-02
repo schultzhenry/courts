@@ -124,6 +124,7 @@ h1 {
 }
 
 h2 {
+  pointer-events: none;
   transition: all 0.6s;
   text-shadow:
    -1px -1px 1px white,
@@ -165,7 +166,7 @@ svg {
 .court {
   pointer-events: all;
   height: 27px;
-  max-width: 45px;
+  max-width: 52px;
   border: 0.5px solid lightGrey;
   margin: auto;
   transition: all 0.2s;
@@ -211,13 +212,14 @@ svg {
   flex-grow: 0;
 }
 #supreme-level, #appellate-level, #district-level {
-  flex: 1;
+  flex: 0;
   padding-top: 12px;
   border: 1px solid lightGrey;
   border-bottom: none;
 }
 
 #district-level {
+  flex: 1;
   /* max-height: 100%; */
   border-bottom: 1px solid lightGrey;
 }
