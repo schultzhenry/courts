@@ -347,5 +347,5 @@ input.footer-button {
 /* IMPORTANT FOR RENDERING JUDGE COLORS APPROPRIATELY */
 circle.nodeDefault { fill: black; }
 .inactive-hover circle.nodeDefault { fill: lightGrey; }
-circle.Vacant { fill: none; stroke: black; stroke-width: 0.4px; }
-.inactive-hover circle.Vacant { stroke: lightGrey; }
+circle.Vacant { fill: whiteSmoke; stroke: black; stroke-width: 0.4px; }
+.inactive-hover circle.Vacant { fill: whiteSmoke; stroke: lightGrey; }
