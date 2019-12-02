@@ -123,4 +123,18 @@ function bindInteraction() {
       $('.'+String($( this ).attr('id'))).removeClass('active-hover');
     });
 
+
+    // $('#map-button').click(function() {
+    //   if (!$(this).is(':checked')) {
+    //     return '';
+    //   });
+    //
+    $('#judge-fill-button').click(function() {
+      if ($(this).is(':checked')) {
+        $('circle').removeClass('nodeDefault');
+      } else {
+        $('circle').addClass('nodeDefault');
+      }
+    });
+
 }

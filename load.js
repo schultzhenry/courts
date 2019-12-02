@@ -71,7 +71,7 @@ async function loadData() {
         var pad = 2;
         var center = {x: w/2, y: h/2};
         var forceStrength = 0.05;
-        var radius = 2.75;
+        var radius = 2.65;
         // APPEND SVG
         var svg = selection.selectAll(".court")
           .append("svg")
@@ -83,11 +83,11 @@ async function loadData() {
         var nodes = d3.range(size).map(function(i) { return {r: radius}; });
         // CREATE SIMULATION
         var simulation = d3.forceSimulation(nodes)
-          .velocityDecay(0.1)
-          .force('center', d3.forceCenter(w/2, h/2))
+          .velocityDecay(0.3)
+          .force('center', d3.forceCenter(w/2, h/1.65))
           .force("x", d3.forceX().strength(forceStrength).x(center.x))
           .force("y", d3.forceY().strength(forceStrength).y(center.y))
-          .force("collide", d3.forceCollide().radius(function(d) { return d.r * 1.2; }).iterations(10))
+          .force("collide", d3.forceCollide().radius(function(d) { return d.r * 1.2; }).iterations(2))
           .on("tick", ticked);
         // ADD NODES TO SVG
         var node = svg.append("g")
@@ -97,8 +97,8 @@ async function loadData() {
           .attr("r", function(d){  return d.r })
           .attr('class', function(d, i) {
             let nodeData = judgeNodeClass(level, name.replace('-', ' ')).judges_curr[i];
-            if (!nodeData) { return 'Vacant'; }
-            return nodeData['Party of Appointing President'];
+            if (!nodeData) { return 'Vacant nodeDefault'; }
+            return nodeData['Party of Appointing President'].concat(' nodeDefault');
           });
         function ticked() { node
           .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(w - radius, d.x)); })

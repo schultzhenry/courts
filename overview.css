@@ -196,7 +196,7 @@ svg {
 .court-label {
   pointer-events: none;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   padding: 0px;
   margin: 0px;
   padding-top: 2px;
@@ -208,7 +208,7 @@ svg {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  flex-basis: 86px;
+  flex-basis: 72px;
   flex-grow: 0;
 }
 #supreme-level, #appellate-level, #district-level {
@@ -219,14 +219,13 @@ svg {
 }
 
 #district-level {
-  flex: 1;
-  /* max-height: 100%; */
   border-bottom: 1px solid lightGrey;
+  flex: 1;
 }
 
 #map-vis {
   position: fixed;
-  bottom: Var(--outer-border);
+  bottom: Calc(5 * Var(--outer-border));
   left: Var(--outer-border);
 }
 
@@ -300,22 +299,12 @@ circle.Democratic {
   fill: dodgerblue;
 }
 
-circle.Vacant {
-  fill: none;
-  stroke: black;
-  stroke-width: 0.3px;
-}
-
 .inactive-hover circle.Republican {
   fill: #ffcccc;
 }
 
 .inactive-hover circle.Democratic {
   fill: #cce0ff;
-}
-
-.inactive-hover circle.Vacant {
-  stroke: lightGrey;
 }
 
 circle {
@@ -330,3 +319,33 @@ circle {
   height: 100%;
   background: white;
 }
+
+#left-footer {
+  width: 100%;
+  bottom: 0px;
+  height: Calc(3 * Var(--outer-border));
+  padding-bottom: Var(--outer-border);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.footer-button {
+  padding-left: Var(--outer-border);
+  align-self: center;
+  font-size: 18px;
+}
+
+input.footer-button {
+  height: 12.5px;
+  margin-bottom: 0px;
+  /* align-self: center; */
+}
+
+/* MAKE SURE THIS NODEDEFAULT STYLE IS AT THE BOTTOM  */
+/* IMPORTANT FOR RENDERING JUDGE COLORS APPROPRIATELY */
+circle.nodeDefault { fill: black; }
+.inactive-hover circle.nodeDefault { fill: lightGrey; }
+circle.Vacant { fill: none; stroke: black; stroke-width: 0.4px; }
+.inactive-hover circle.Vacant { stroke: lightGrey; }
