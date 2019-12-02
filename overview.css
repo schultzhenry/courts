@@ -230,6 +230,10 @@ svg {
   left: Var(--outer-border);
 }
 
+#map-vis.hidden {
+  visibility: hidden;
+}
+
 .judges-thumbnail {
   overflow:visible;
 }

@@ -6,6 +6,7 @@ function drawMap(mapw, maph) {
   var svg = d3.select("#left-vis").append('svg')
     .attrs({
       id: 'map-vis',
+      class: 'hidden',
       width: 520,
       height: 320
     })
