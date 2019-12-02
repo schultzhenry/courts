@@ -4,12 +4,10 @@
 
 console.log('Hang on a moment; loading data...');
 
-// FORMAT
+// FORMAT STRINGS
 function f(s) { return s.replace(' ', '-'); }
 
-
 async function loadData() {
-
   // LOAD CSV JUDGE DATA
   d3.csv('data/federal-judicial-service.csv', function(federal_judicial_service) {
     d3.csv('data/judges.csv', function(judges) {
@@ -195,5 +193,6 @@ async function loadData() {
 };
 
 loadData();
+setTimeout(function() {$('*').css('opacity', '1'); }, 700);
 setTimeout(function(){ console.log('Vis loaded. Binding interactions to vis...'); }, 700);
 setTimeout(function(){ bindInteraction(); }, 700);
