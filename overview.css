@@ -18,7 +18,6 @@ body {
 }
 
 * {
-  opacity: 0;
   font-family: 'Barlow Condensed', sans-serif;
   line-height: 1.15em;
   box-sizing: border-box;
@@ -319,4 +318,13 @@ circle.Vacant {
 
 circle {
   pointer-events: none;
+}
+
+#preview-screen {
+  transition: all 0.3s;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background: white;
 }
