@@ -66,8 +66,8 @@ async function loadData() {
       function populateJudges(level, selection, name, size) {
 
         // CONSTANTS
-        var w = 40;
-        var h = 32;
+        var w = 44;
+        var h = 26;
         var pad = 2;
         var center = {x: w/2, y: h/2};
         var forceStrength = 0.05;
