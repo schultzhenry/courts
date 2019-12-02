@@ -23,23 +23,32 @@ async function loadData() {
 
       console.log('Load Complete. Populating visualization...');
 
-      function getCurrentJudgeCount(name) {
-        sum = 0;
-        if (!group[name]) { return []; };
-        for (i of group[name]) { if (i['Termination Date'] === "" && i['Senior Status Date'] === "") { sum += 1; }; };
-        return sum;
-      }
       function getCurrentJudges(name) {
         judge_list = [];
         if (!group[name]) { return []; };
         for (i of group[name]) { if (i['Termination Date'] === "" && i['Senior Status Date'] === "") { judge_list.push(i); }; };
         return judge_list;
       }
+
       function updateConstantDictionary(dictionary) {
         let n = dictionary['lname'];
-        dictionary['judges']      = group[n];
-        dictionary['judges_curr'] = getCurrentJudges(n);
-        dictionary['size_curr']   = getCurrentJudgeCount(n);
+        if (Array.isArray(n)) {
+          let judges = [];
+          let judges_curr = [];
+          let size_curr = 0;
+          for (name of n) {
+            judges.push(group[name]);
+            judges_curr.push(getCurrentJudges(name));
+            size_curr += getCurrentJudges(name).length;
+          }
+          dictionary['judges']      = [].concat.apply([],judges);
+          dictionary['judges_curr'] = [].concat.apply([],judges_curr);
+          dictionary['size_curr']   = size_curr;
+        } else {
+          dictionary['judges']      = group[n];
+          dictionary['judges_curr'] = getCurrentJudges(n);
+          dictionary['size_curr']   = dictionary['judges_curr'].length;
+        }
       }
 
       // UPDATE CONSTANT DICTIONARIES FROM CONSTANTS.JS WITH FULL JUDGE DATA PULLED FROM CSVS
@@ -47,20 +56,24 @@ async function loadData() {
       $.each(appellate_dictionary, function(i, v) { updateConstantDictionary(v); })   // APPELLATE
       $.each(district_dictionary, function(i, v) { updateConstantDictionary(v); })    // DISTRICT
 
-      function judgeNodeClass(name) {
-        if (name === 'Supreme Court') { return supreme_dictionary[0]; };
-        for (i of appellate_dictionary) { if (i.name === name) { return i; }; };
-        for (i of district_dictionary) { if (i.name === name) { return i; }; };
+      function judgeNodeClass(level, name) {
+        if (level === 'supreme') { return supreme_dictionary[0];
+        } else if (level === 'appellate') {
+          for (i of appellate_dictionary) { if (i.name === name) { return i; }; };
+        } else if (level === 'district') {
+          for (i of district_dictionary) { if (i.name === name) { return i; }; };
+        }
       };
 
-      function populateJudges(selection, name, size) {
+      function populateJudges(level, selection, name, size) {
+
         // CONSTANTS
-        var w = 54;
-        var h = 24;
+        var w = 40;
+        var h = 32;
         var pad = 2;
         var center = {x: w/2, y: h/2};
         var forceStrength = 0.05;
-        var radius = 2.7;
+        var radius = 2.75;
         // APPEND SVG
         var svg = selection.selectAll(".court")
           .append("svg")
@@ -85,8 +98,8 @@ async function loadData() {
           .data(nodes).enter().append("circle")
           .attr("r", function(d){  return d.r })
           .attr('class', function(d, i) {
-            let nodeData = judgeNodeClass(name.replace('-', ' ')).judges_curr[i];
-            if (!nodeData) { return 'Unknown'; }
+            let nodeData = judgeNodeClass(level, name.replace('-', ' ')).judges_curr[i];
+            if (!nodeData) { return 'Vacant'; }
             return nodeData['Party of Appointing President'];
           });
         function ticked() { node
@@ -120,7 +133,7 @@ async function loadData() {
           // POPULATE JUDGES
           appellate_dictionary.forEach(function(entry) {
             selection = d3.select("div #"+f(entry.name)+".appellate-column");
-            populateJudges(selection, f(entry.name), entry.size);
+            populateJudges('appellate', selection, f(entry.name), entry.size);
           });
         }
         else if (level === 'district') {
@@ -148,21 +161,18 @@ async function loadData() {
             .attr('id', function(d) { return f(d.name)+'-label'; })
             .text(function(d) { return d.name; });
           // POPULATE JUDGES
-          district_dictionary.forEach(function(entry) {
-            selection = d3.select("div #"+f(entry.name)+"-box.court-box");
-            populateJudges(selection, f(entry.name), entry.size);
-          });
+          for (i of district_dictionary) {
+            selection = d3.select("div #"+f(i.name)+"-box.court-box");
+            populateJudges('district', selection, f(i.name), i.size);
+          }
         }
         else if (level === 'supreme') {
-
           var selection = selection.append('div').attr('class', 'appellate-column');
-
           selection.selectAll(".court")
             .data(supreme_dictionary)
             .enter().append("div")
             .attr("id", function(d) { return d.name.replace(' ', '-');})
             .attr('class', function(d) { return 'court c'+String(d.jdcode).split(',').join(' c'); });
-
           selection.selectAll('.court-label')
             .data(supreme_dictionary)
             .enter()
@@ -170,8 +180,7 @@ async function loadData() {
             .attr('class', 'court-label')
             .attr('id', level+'-label' )
             .text(function(d) { return d.name; });
-
-          populateJudges(selection, 'Supreme Court', supreme_dictionary[0].size);
+          populateJudges('supreme', selection, 'Supreme Court', supreme_dictionary[0].size);
         }
       };
 

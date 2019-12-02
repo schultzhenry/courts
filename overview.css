@@ -18,7 +18,7 @@ body {
 }
 
 * {
-  font-family: 'EB Garamond', serif;
+  font-family: 'Barlow Condensed', sans-serif;
   line-height: 1.15em;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -87,15 +87,19 @@ body {
 }
 
 #judge-table-space {
+  border: 1px solid lightGrey;
   overflow-y: scroll;
   position: relative;
   margin: auto;
-  top: Var(--outer-border);
-  width: Calc(100% - (2*Var(--outer-border)));
-  height: Calc(100% - (2*Var(--outer-border)));
-  border: 1px solid whiteSmoke;
+  /* top: Var(--outer-border); */
+  width: 100%;
+  height: 50%;
 }
+
 #judge-table {
+  width: 100%;
+  border-collapse: collapse;
+  /* border: 0.5px solid lightGrey; */
 }
 
 #judge-table th {
@@ -104,6 +108,12 @@ body {
   line-height: 2;
   text-align: left;
   padding-right: 8px;
+  /* background-color: whiteSmoke; */
+  border-bottom: 1px solid lightGrey;
+}
+
+#judge-table td, #judge-table th {
+  padding: 4px;
 }
 
 h1 {
@@ -114,9 +124,22 @@ h1 {
 }
 
 h2 {
+  text-shadow:
+   -1px -1px 1px white,
+    1px -1px 1px white,
+    -1px 1px 1px white,
+     1px 1px 1px white,
+   -2px -2px 1px white,
+    2px -2px 1px white,
+    -2px 2px 1px white,
+     2px 2px 1px white;
+  position: fixed;
+  text-align: left;
   font-weight: 400;
-  font-size: 22px;
-  margin: 10px;
+  font-size: 18px;
+  margin: 0px;
+  padding: 0px;
+  padding-left: Var(--inner-border);
 }
 
 #right-panel-toggle {
@@ -139,8 +162,9 @@ svg {
 }
 
 .court {
-  height: 25px;
-  max-width: 55px;
+  pointer-events: all;
+  height: 33px;
+  max-width: 41px;
   border: 0.5px solid lightGrey;
   margin: auto;
   transition: all 0.2s;
@@ -170,12 +194,12 @@ svg {
 .court-label {
   pointer-events: none;
   text-align: center;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   padding: 0px;
   margin: 0px;
   padding-top: 2px;
   padding-bottom: 6px;
+  font-weight:lighter;
 }
 .appellate-column {
   flex: 1;
@@ -185,8 +209,15 @@ svg {
   flex-basis: 86px;
   flex-grow: 0;
 }
-#supreme-level, #appeals-level, #district-level {
+#supreme-level, #appellate-level, #district-level {
+  padding-top: 12px;
+  border: 1px solid lightGrey;
+  border-bottom: none;
+}
 
+#district-level {
+  height: 100%;
+  border-bottom: 1px solid lightGrey;
 }
 
 #map-vis {
@@ -260,6 +291,17 @@ svg text {
 circle.Republican {
   fill: red;
 }
+
+circle.Democratic {
+  fill: dodgerblue;
+}
+
+circle.Vacant {
+  fill: none;
+  stroke: black;
+  stroke-width: 0.3px;
+}
+
 .inactive-hover circle.Republican {
   fill: #ffcccc;
 }
@@ -268,14 +310,10 @@ circle.Republican {
   fill: #cce0ff;
 }
 
-circle.Democratic {
-  fill: dodgerblue;
+.inactive-hover circle.Vacant {
+  stroke: lightGrey;
 }
 
 circle {
   pointer-events: none;
-}
-
-.court {
-  pointer-events: all;
 }

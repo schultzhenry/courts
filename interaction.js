@@ -9,9 +9,9 @@ function bindInteraction() {
     function toggleRightPanel() {
       if (rightPanelOpen == false) {
         document.documentElement.style.setProperty('--inner-border', "Calc(Var(--outer-border) / 2)");
-        document.documentElement.style.setProperty('--left-width', "50%");
-        document.documentElement.style.setProperty('--right-width', "50%");
-        $('#right-panel-toggle').css("right", "Calc(50% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
+        document.documentElement.style.setProperty('--left-width', "60%");
+        document.documentElement.style.setProperty('--right-width', "40%");
+        $('#right-panel-toggle').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
         $('#right-panel-toggle').children("#right-panel-toggle-text").text("→");
         setTimeout(function() {
           $("#right-header").children("h1").text("N/A");
@@ -33,9 +33,9 @@ function bindInteraction() {
     // Open right panel
     function openRightPanel() {
       document.documentElement.style.setProperty('--inner-border', "Calc(Var(--outer-border) / 2)");
-      document.documentElement.style.setProperty('--left-width', "50%");
-      document.documentElement.style.setProperty('--right-width', "50%");
-      $('#right-panel-toggle').css("right", "Calc(50% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
+      document.documentElement.style.setProperty('--left-width', "60%");
+      document.documentElement.style.setProperty('--right-width', "40%");
+      $('#right-panel-toggle').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
       $('#right-panel-toggle').children("#right-panel-toggle-text").text("→");
       rightPanelOpen = true;
     }
@@ -54,7 +54,7 @@ function bindInteraction() {
       $(this).removeClass('active-hover');
       // Ensure right panel is open, with correct data
       openRightPanel();
-      populateRightPanel(this.id.replace('-', ' '));
+      populateRightPanel(this.id.replace('-', ' '), $(this).parent().attr('class'));
     });
 
     // Handle hovering over districts on map
