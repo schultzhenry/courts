@@ -167,7 +167,7 @@ svg {
   pointer-events: all;
   height: 27px;
   max-width: 52px;
-  border: 0.5px solid lightGrey;
+  border: 1px solid lightGrey;
   margin: auto;
   transition: all 0.2s;
   background: whiteSmoke;
@@ -219,6 +219,7 @@ svg {
 }
 
 #district-level {
+  overflow-y: scroll;
   border-bottom: 1px solid lightGrey;
   flex: 1;
 }
@@ -320,7 +321,7 @@ circle {
   background: white;
 }
 
-#left-footer {
+#left-footer, #right-footer {
   width: 100%;
   bottom: 0px;
   height: Calc(3 * Var(--outer-border));
