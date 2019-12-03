@@ -93,10 +93,13 @@ body {
   overflow-y: scroll;
   position: relative;
   margin: auto;
-  /* top: Var(--outer-border); */
   width: 100%;
-  min-height: 25%;
-  max-height: 100%;
+  height: Calc(50% - Var(--outer-border));
+}
+
+#judge-table-footer {
+  height: Calc(4 * Var(--outer-border));
+  /* background: lightBlue; */
 }
 
 #judge-table {
@@ -146,6 +149,7 @@ h2 {
   font-size: 18px;
   margin: 0px;
   padding: 0px;
+  margin-top: -4px;
   padding-left: Var(--inner-border);
 }
 
