@@ -129,12 +129,22 @@ function bindInteraction() {
       else                         { $('#map-vis').removeClass('hidden'); }
     });
 
-    $('#judge-fill-button').click(function() {
+    $('#judge-party-button').click(function() {
       if ($(this).is(':checked')) {
         $('circle').removeClass('nodeDefault');
       } else {
         $('circle').addClass('nodeDefault');
       }
+    });
+
+    $('#close-preview-screen').click(function() {
+      setTimeout(function(){ $('#preview-screen').css('opacity', '0'); }, 100);
+      setTimeout(function(){ $('#preview-screen').css('pointer-events', 'none'); }, 200);
+    });
+
+    $('#about-button').click(function() {
+      setTimeout(function(){ $('#preview-screen').css('opacity', '1'); }, 100);
+      setTimeout(function(){ $('#preview-screen').css('pointer-events', 'all'); }, 200);
     });
 
 }

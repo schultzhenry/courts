@@ -97,8 +97,8 @@ async function loadData() {
           .attr("r", function(d){  return d.r })
           .attr('class', function(d, i) {
             let nodeData = judgeNodeClass(level, name.replace('-', ' ')).judges_curr[i];
-            if (!nodeData) { return 'Vacant nodeDefault'; }
-            return nodeData['Party of Appointing President'].concat(' nodeDefault');
+            if (!nodeData) { return 'Vacant'; }
+            return nodeData['Party of Appointing President'];
           });
         function ticked() { node
           .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(w - radius, d.x)); })
@@ -195,5 +195,5 @@ async function loadData() {
 loadData();
 setTimeout(function(){ console.log('Vis loaded. Binding interactions to vis...'); }, 700);
 setTimeout(function(){ bindInteraction(); }, 700);
-setTimeout(function(){ $('#preview-screen').css('opacity', '0'); }, 750);
-setTimeout(function(){ $('#preview-screen').remove(); }, 1000);
+// setTimeout(function(){ $('#preview-screen').css('opacity', '0'); }, 750);
+// setTimeout(function(){ $('#preview-screen').remove(); }, 1000);

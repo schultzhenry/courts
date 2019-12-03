@@ -16,7 +16,19 @@
 </head>
 <body>
   <div id="view">
-    <div id="preview-screen"></div>
+    <div id="preview-screen">
+      <div id="about-page-container">
+        <h1>Understanding the United States Federal Judiciary</h1>
+        <h3>Welcome to this interactive visualization of the American federal court system.
+          Upon closing this page, you will find an overview chart with Supreme, Appellate, and District courts.
+          Each circle on the overview chart represents a judge currently serving on one court.
+          By default, judges are highlighted according to the political party of the president who appointed them.
+          To remove this highlight or to select other highlight options, use the checkboxes on the bottom left of the page.
+          Please note this visualization does not include Article I courts.</h3>
+        <h3>This website was created by Natalie Schultz-Henry in the fall of 2019 in fulfillment of her senior project in Computing and the Arts at Yale University.</h3>
+      </div>
+      <div id="close-preview-screen">╳</div>
+    </div>
     <div id="left-panel">
       <div id="left-header" class="header">
         <h1>Federal Judiciary of the United States</h1>
@@ -40,10 +52,13 @@
       </div>
       <div id="left-footer" class="footer">
         <div id="left-footer-left-buttons">
+          <div   class="footer-button" id="about-button">About</div>
           <label class="footer-button" for="map-button">Map</label>
           <input class="footer-button" type="checkbox" id="map-button" name="map-button" value="map-checked">
-          <label class="footer-button" for="judge-fill-button">Party</label>
-          <input class="footer-button" type="checkbox" id="judge-fill-button" name="judge-fill-button" value="fill-checked">
+          <label class="footer-button" for="judge-party-button">Party</label>
+          <input class="footer-button" type="checkbox" id="judge-party-button" name="judge-party-button" value="party-checked" checked>
+          <label class="footer-button" for="judge-president-button">President</label>
+          <input class="footer-button" type="checkbox" id="judge-president-button" name="judge-president-button" value="president-checked">
         </div>
         <div id='left-footer-right-buttons'>
           <div   class="footer-button" id="right-panel-button">
