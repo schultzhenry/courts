@@ -11,8 +11,8 @@ function bindInteraction() {
         document.documentElement.style.setProperty('--inner-border', "Calc(Var(--outer-border) / 2)");
         document.documentElement.style.setProperty('--left-width', "60%");
         document.documentElement.style.setProperty('--right-width', "40%");
-        $('#right-panel-toggle').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
-        $('#right-panel-toggle').children("#right-panel-toggle-text").text("→");
+        $('#right-panel-button').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
+        $('#right-panel-button').children("#right-panel-button-text").text("→");
         setTimeout(function() {
           $("#right-header").children("h1").text("Select a Court on the Left to View Details");
         }, 550);
@@ -20,12 +20,12 @@ function bindInteraction() {
       } else {
         document.documentElement.style.setProperty('--left-width', "100%");
         document.documentElement.style.setProperty('--right-width', "0%");
-        $('#right-panel-toggle').css("right", "Calc(Var(--outer-border) - 1px)");
+        $('#right-panel-button').css("right", "Calc(Var(--outer-border) - 1px)");
         $("#right-header").children("h1").text("");
         setTimeout(function() {
           document.documentElement.style.setProperty('--inner-border', "Calc(Var(--outer-border))");
         }, 500);
-        $('#right-panel-toggle').children("#right-panel-toggle-text").text("←");
+        $('#right-panel-button').children("#right-panel-button-text").text("←");
         rightPanelOpen = false;
       }
     }
@@ -35,13 +35,13 @@ function bindInteraction() {
       document.documentElement.style.setProperty('--inner-border', "Calc(Var(--outer-border) / 2)");
       document.documentElement.style.setProperty('--left-width', "60%");
       document.documentElement.style.setProperty('--right-width', "40%");
-      $('#right-panel-toggle').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
-      $('#right-panel-toggle').children("#right-panel-toggle-text").text("→");
+      $('#right-panel-button').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
+      $('#right-panel-button').children("#right-panel-button-text").text("→");
       rightPanelOpen = true;
     }
 
     // Open/close right panel on toggle click
-    $('#right-panel-toggle').click(function() {
+    $('#right-panel-button').click(function() {
       toggleRightPanel();
       $('*').removeClass('active-court');
     });

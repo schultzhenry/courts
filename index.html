@@ -39,11 +39,17 @@
         </div>
       </div>
       <div id="left-footer" class="footer">
-        <!-- <div class="footer-button" id="map-toggle-button">Map</div> -->
-        <label class="footer-button" for="map-button">Map</label>
-        <input class="footer-button" type="checkbox" id="map-button" name="map-button" value="map-checked">
-        <label class="footer-button" for="judge-fill-button">Party</label>
-        <input class="footer-button" type="checkbox" id="judge-fill-button" name="judge-fill-button" value="fill-checked">
+        <div id="left-footer-left-buttons">
+          <label class="footer-button" for="map-button">Map</label>
+          <input class="footer-button" type="checkbox" id="map-button" name="map-button" value="map-checked">
+          <label class="footer-button" for="judge-fill-button">Party</label>
+          <input class="footer-button" type="checkbox" id="judge-fill-button" name="judge-fill-button" value="fill-checked">
+        </div>
+        <div id='left-footer-right-buttons'>
+          <div   class="footer-button" id="right-panel-button">
+            <p id="right-panel-button-text">←</p>
+          </div>
+        </div>
       </div>
     </div>
     <div id="right-panel">
@@ -54,9 +60,6 @@
         <div id="judge-table-space"></div>
       </div>
       <div id="right-footer" class="footer"></div>
-    </div>
-    <div id="right-panel-toggle" class="button">
-      <p id="right-panel-toggle-text">←</p>
     </div>
   </div>
   <script src="interaction.js"></script>

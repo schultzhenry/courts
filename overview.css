@@ -336,8 +336,21 @@ circle {
   padding-bottom: Var(--outer-border);
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
+}
+
+#left-footer-left-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+#left-footer-right-buttons {
+  padding-right: Var(--outer-border);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .footer-button {
