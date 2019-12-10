@@ -74,7 +74,7 @@ function getJudgeInfo(d) {
   }
 
   return [
-    ['name', d['Judge Name']],
+    ['judge', d['Judge Name']],
     ['app_pres', d['Appointing President']],
     ['app_pres_party', d['Party of Appointing President']],
     ['commission', commission],
@@ -93,7 +93,7 @@ function populateRightPanel(n) {
   let data_judges = (toggleAllJudges == false ? data['judges_curr'] : data['judges']);
 
   let formatted_data = [];
-  for (row of data_judges) { formatted_data.push(getJudgeInfo(row)); }
+  data_judges.forEach(function(d, i) { formatted_data.push(getJudgeInfo(d)); });
   var flat_formatted_data = [].concat.apply([], formatted_data);
 
   // Remove existing table and create new
@@ -142,14 +142,16 @@ function populateRightPanel(n) {
           c = c.concat('app_pres_party');
           if      (d[1] === 'Democratic')                   { c = c.concat(' democratic'); }
           else if (d[1] === 'Federalist')                   { c = c.concat(' federalist'); }
-          else if (d[1] === 'Jefersonian Republican')       { c = c.concat(' jeffersonian-republican'); }
+          else if (d[1] === 'Jeffersonian Republican')       { c = c.concat(' jeffersonian-republican'); }
           else if (d[1] === 'None (assignment)')            { c = c.concat(' none-assign'); }
           else if (d[1] === 'None (reassignment)')          { c = c.concat(' none-reassign'); }
           else if (d[1] === 'Republican')                   { c = c.concat(' republican'); }
           else if (d[1] === 'Whig')                         { c = c.concat(' whig'); }
-          else                                              { c = c.concat(' other'); }
+          else if (d[1] === '')                             { c = c.concat(' independent'); }
        } else if (d[0] === 'years_on_court') {
          c = c.concat('years_on_court');
+       } else if (d[0] === 'judge') {
+         c = c.concat('judge');
        }
        return c;
       })
@@ -163,6 +165,15 @@ function populateRightPanel(n) {
 
       s.append('span')
         .text(function(d) {
+          if (d[0] === 'app_pres_party' || d[0] === 'app_pres') {
+            if (d[1] === 'None (assignment)') {
+              return 'N/A (Assignment)';
+            } else if (d[1] === 'None (reassignment)') {
+              return 'N/A (Reassignment)';
+            } else if (d[1] === '') {
+              return 'Independent';
+            }
+          }
           if (d[1] === 'Exceptionally Well Qualified') { return 'Ex. Well Qualified'; }
           return d[1];
         });
@@ -199,5 +210,10 @@ function populateRightPanel(n) {
       .attr('class', 'vacancy')
       .text(function(d) { return d; });
 
+    $('.judge').each(function(d,i) {
+      let s = d3.select(this);
+      let span = s.select('span');
+      // getJudgeLink(d);
+    });
   }, 100);
 }

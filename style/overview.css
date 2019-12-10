@@ -175,11 +175,12 @@ td div {
 .app_pres_party.democratic              { background: dodgerBlue; }
 .app_pres_party.federalist              { background: black; }
 .app_pres_party.jeffersonian-republican { background: mediumSeaGreen; }
-.app_pres_party.none-assign             { background: whiteSmoke; }
-.app_pres_party.none-reassign           { background: whiteSmoke; }
+.app_pres_party.none-assign             { background: lightGrey; }
+.app_pres_party.none-reassign           { background: lightGrey; }
 .app_pres_party.republican              { background: crimson; }
 .app_pres_party.whig                    { background: gold; }
-.app_pres_party.other                   { background: whiteSmoke; }
+.app_pres_party.independent             { background: lightGrey; }
+.app_pres_party.other                   { background: lightGrey; }
 
 .year_on_court {
   background: lightGrey;
@@ -193,10 +194,10 @@ td.vacancy {
 h1 {
   font-family: Gelasio;
   font-weight: 600;
-  padding-top: 18px;
+  padding-top: 12px;
   transition: all 0.6s;
   text-align: center;
-  font-size: 30px;
+  font-size: 28px;
 }
 
 h2 {

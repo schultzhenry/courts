@@ -19,7 +19,7 @@ function drawMap(mapw, maph) {
 
   // Draw county and district boundaries
   var path = d3.geoPath();
-  d3.json("us.json", function(error, us) {
+  d3.json("data/us.json", function(error, us) {
     if (error) throw error;
 
     var counties = svg.append("g").attr("id", "counties").selectAll("path")

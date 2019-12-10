@@ -150,10 +150,8 @@ function bindInteraction() {
         toggleAllJudges = true;
         $(this).parent().attr('class')
         populateRightPanel($('.active-court').attr('id').replace('-', ' '));
-        console.log($('.active-court'));
       } else {
         toggleAllJudges = false;
-        console.log($('.active-court'));
         populateRightPanel($('.active-court').attr('id').replace('-', ' '));
       }
     });
