@@ -8,8 +8,9 @@ function drawMap(mapw, maph) {
       id: 'map-vis',
       class: 'hidden',
       width: 520,
-      height: 320
+      height: 320,
     })
+    .css('pointer-events', 'none')
     .append('g')
     .attrs({
       class: 'map',

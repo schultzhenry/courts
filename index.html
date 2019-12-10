@@ -56,9 +56,24 @@
           <label class="footer-button" for="map-button">Map</label>
           <input class="footer-button" type="checkbox" id="map-button" name="map-button" value="map-checked">
           <label class="footer-button" for="judge-party-button">Party</label>
-          <input class="footer-button" type="checkbox" id="judge-party-button" name="judge-party-button" value="party-checked" checked>
-          <label class="footer-button" for="judge-president-button">President</label>
+          <input class="footer-button" type="checkbox" id="judge-party-button" name="judge-party-button" value="president-checked" checked>
+          <label class="footer-button" for="judge-president-button">
+            <div class="pres-option hidden" value="Donald-J.-Trump">Donald J. Trump</div>
+            <div class="pres-option hidden" value="Barack-Obama">Barack Obama</div>
+            <div class="pres-option hidden" value="George-W.-Bush">George W. Bush</div>
+            <div class="pres-option hidden" value="William-J.-Clinton">William J. Clinton</div>
+            <div class="pres-option hidden" value="George-H.W.-Bush">George H.W. Bush</div>
+            <div class="pres-option hidden" value="Ronald-Reagan">Ronald Reagan</div>
+            President
+          </label>
+
           <input class="footer-button" type="checkbox" id="judge-president-button" name="judge-president-button" value="president-checked">
+          <!-- <div   class="footer-button" id="judge-president-button"> -->
+
+            <!-- President -->
+          <!-- </div> -->
+          <!-- <label class="footer-button" for="judge-president-button">President</label> -->
+          <!-- <input class="footer-button" type="checkbox" id="judge-president-button" name="judge-president-button" value="president-checked"> -->
         </div>
         <div id='left-footer-right-buttons'>
           <div   class="footer-button" id="right-panel-button">
@@ -73,7 +88,9 @@
       </div>
       <div id="right-vis" class="vis">
         <div id="judge-table-space"></div>
-        <div id="judge-table-footer"></div>
+        <div id="judge-table-footer">
+          <label class="footer-button" for="judge-button">Show All Judges</label>
+          <input class="footer-button" type="checkbox" id="judge-button" name="judge-button" value="judge-checked"></div>
       </div>
       <div id="right-footer" class="footer"></div>
     </div>

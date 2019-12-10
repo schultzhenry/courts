@@ -24,7 +24,7 @@ async function loadData() {
       function getCurrentJudges(name) {
         judge_list = [];
         if (!group[name]) { return []; };
-        for (i of group[name]) { if (i['Termination Date'] === "" && i['Senior Status Date'] === "") { judge_list.push(i); }; };
+        for (i of group[name]) { if (i['Termination Date'] === "" && i['Senior Status Date'] === "" && i['Commission Date'] != "") { judge_list.push(i); }; };
         return judge_list;
       }
 

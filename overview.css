@@ -119,21 +119,27 @@ h3 {
 #judge-table-space {
   background: white;
   border: 1px solid Var(--line-color);
-  overflow-y: scroll;
+  height: Calc(50vh - Var(--outer-border));
   position: relative;
+  overflow-y: scroll;
   margin: auto;
   width: 100%;
-  height: Calc(50% - Var(--outer-border));
-}
-
-#judge-table-footer {
-  height: Calc(4 * Var(--outer-border));
-  /* background: lightBlue; */
 }
 
 #judge-table {
   width: 100%;
+  overflow-y: scroll;
   border-collapse: collapse;
+}
+
+#judge-table-footer {
+  height: Calc(4 * Var(--outer-border));
+  padding-top: Var(--outer-border);
+}
+
+#judge-table tbody {
+  overflow: auto;
+  width: 100%;
 }
 
 #judge-table th {
@@ -147,6 +153,35 @@ h3 {
 
 #judge-table td, #judge-table th {
   padding: 4px;
+}
+
+td div {
+  position: relative;
+  left: 0px;
+  height: 12px;
+  background: none;
+  display: inline-block;
+}
+.aba_rating, .app_pres_party { width: 12px; }
+.aba_rating, .app_pres_party, .years_on_court { margin-right: 6px; }
+.aba_rating.ewq                         { background: seaGreen;       }
+.aba_rating.wq                          { background: mediumSeaGreen; }
+.aba_rating.q                           { background: lightGreen;     }
+.aba_rating.nq                          { background: orange;         }
+.aba_rating.na                          { background: lightGrey; width: 0px; }
+
+.app_pres_party.democratic              { background: dodgerBlue; }
+.app_pres_party.federalist              { background: none; }
+.app_pres_party.jeffersonian-republican { background: none; }
+.app_pres_party.none-assign             { background: none; }
+.app_pres_party.none-reassign           { background: none; }
+.app_pres_party.republican              { background: crimson; }
+.app_pres_party.whig                    { background: none; }
+.app_pres_party.other                   { background: none; }
+
+.year_on_court {
+  background: lightGrey;
+  width: 2px;
 }
 
 td.vacancy {
@@ -384,15 +419,26 @@ circle {
   justify-content: flex-end;
 }
 
-.footer-button {
+#left-footer-left-buttons .footer-button {
   padding-left: Var(--outer-border);
-  align-self: center;
+  align-self: flex-end;
   font-size: 18px;
+}
+
+.footer-button .hidden {
+  display: none;
+}
+.footer-button .pres-option {
+  position: relative;
 }
 
 input.footer-button {
   height: 12.5px;
-  margin-bottom: 0px;
+  margin-bottom: 2px;
+}
+
+.pres-option {
+  transform: translate(0px, -60px);
 }
 
 /* MAKE SURE THIS NODEDEFAULT STYLE IS AT THE BOTTOM  */

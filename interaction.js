@@ -9,9 +9,9 @@ function bindInteraction() {
     function toggleRightPanel() {
       if (rightPanelOpen == false) {
         document.documentElement.style.setProperty('--inner-border', "Calc(Var(--outer-border) / 2)");
-        document.documentElement.style.setProperty('--left-width', "60%");
-        document.documentElement.style.setProperty('--right-width', "40%");
-        $('#right-panel-button').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
+        document.documentElement.style.setProperty('--left-width', "55%");
+        document.documentElement.style.setProperty('--right-width', "45%");
+        $('#right-panel-button').css("right", "Calc(45% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
         $('#right-panel-button').children("#right-panel-button-text").text("→");
         setTimeout(function() {
           $("#right-header").children("h1").text("Select a Court on the Left to View Details");
@@ -33,9 +33,9 @@ function bindInteraction() {
     // Open right panel
     function openRightPanel() {
       document.documentElement.style.setProperty('--inner-border', "Calc(Var(--outer-border) / 2)");
-      document.documentElement.style.setProperty('--left-width', "60%");
-      document.documentElement.style.setProperty('--right-width', "40%");
-      $('#right-panel-button').css("right", "Calc(40% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
+      document.documentElement.style.setProperty('--left-width', "55%");
+      document.documentElement.style.setProperty('--right-width', "45%");
+      $('#right-panel-button').css("right", "Calc(45% - Calc(Var(--outer-border) * 3) - Var(--inner-border))");
       $('#right-panel-button').children("#right-panel-button-text").text("→");
       rightPanelOpen = true;
     }
@@ -54,7 +54,7 @@ function bindInteraction() {
       $(this).removeClass('active-hover');
       // Ensure right panel is open, with correct data
       openRightPanel();
-      populateRightPanel(this.id.replace('-', ' '), $(this).parent().attr('class'));
+      populateRightPanel(this.id.replace('-', ' '));
     });
 
     // Handle hovering over districts on map
@@ -123,12 +123,20 @@ function bindInteraction() {
       $('.'+String($( this ).attr('id'))).removeClass('active-hover');
     });
 
-
-    $('#map-button').click(function() {
-      if (!$(this).is(':checked')) { $('#map-vis').addClass('hidden'); }
-      else                         { $('#map-vis').removeClass('hidden'); }
+    $('#about-button').click(function() {
+      setTimeout(function(){ $('#preview-screen').css('opacity', '1'); }, 100);
+      setTimeout(function(){ $('#preview-screen').css('pointer-events', 'all'); }, 200);
     });
-
+    $('#map-button').click(function() {
+      if (!$(this).is(':checked')) {
+        $('#map-vis').css('pointer-events', 'all');
+        $('#map-vis').addClass('hidden');
+      }
+      else                         {
+        $('#map-vis').css('pointer-events', 'none');
+        $('#map-vis').removeClass('hidden');
+      }
+    });
     $('#judge-party-button').click(function() {
       if ($(this).is(':checked')) {
         $('circle').removeClass('nodeDefault');
@@ -136,15 +144,29 @@ function bindInteraction() {
         $('circle').addClass('nodeDefault');
       }
     });
+    $('#judge-president-button').click(function() {
+      if ($(this).is(':checked')) {
+        $('.pres-option').removeClass('hidden');
+      } else {
+        $('.pres-option').addClass('hidden');
+      }
+    });
+
+    $('#judge-button').click(function() {
+      if ($(this).is(':checked')) {
+        toggleAllJudges = true;
+        $(this).parent().attr('class')
+        populateRightPanel($('.active-court').attr('id').replace('-', ' '));
+        console.log($('.active-court'));
+      } else {
+        toggleAllJudges = false;
+        console.log($('.active-court'));
+        populateRightPanel($('.active-court').attr('id').replace('-', ' '));
+      }
+    });
 
     $('#close-preview-screen').click(function() {
       setTimeout(function(){ $('#preview-screen').css('opacity', '0'); }, 100);
       setTimeout(function(){ $('#preview-screen').css('pointer-events', 'none'); }, 200);
     });
-
-    $('#about-button').click(function() {
-      setTimeout(function(){ $('#preview-screen').css('opacity', '1'); }, 100);
-      setTimeout(function(){ $('#preview-screen').css('pointer-events', 'all'); }, 200);
-    });
-
 }
