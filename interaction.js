@@ -4,6 +4,7 @@ function bindInteraction() {
 
     // Right panel closed on default
     var rightPanelOpen = false;
+    var mapOpen = false;
 
     // Toggle right panel
     function toggleRightPanel() {
@@ -59,65 +60,56 @@ function bindInteraction() {
 
     // Handle hovering over districts on map
     $(document).on('mouseenter','.district', function (event) {
+      // Do nothing if map inactive
+      if (mapOpen == false) { return; }
+      // Save tag name
+      let tag = $(this).get(0).tagName;
       // Do nothing if hovering over territory label
-      if ($(this).get(0).tagName == 'text') {
-        return;
-      } else if ($(this).get(0).tagName == 'path') {
-        // Grey out other districts
-        $('.district').addClass('inactive-hover');
-        $('.judges-thumbnail').addClass('inactive-hover');
-        $('.court-label').addClass('inactive-hover');
+      if (tag == 'text') { return; }
+      // Grey out other districts
+      $('.district').addClass('inactive-hover');
+      $('.judges-thumbnail').addClass('inactive-hover');
+      $('.court-label').addClass('inactive-hover');
+      // Clone if district path to preserve boundary highlight
+      if (tag == 'path') {
         // Add copy of district on top of svg and highlight
-        var temp = $(this).clone().appendTo($(this).parent())
-          .removeClass('inactive-hover')
-          .addClass('active-hover');
-        // Highlight corresponding courts
-        $('.'+String($( this ).attr('id'))).addClass('active-hover');
-        $('.'+String($( this ).attr('id'))+' .judges-thumbnail').removeClass('inactive-hover');
-        $('.'+String($( this ).attr('id'))).siblings().removeClass('inactive-hover');
-        $('.active-court .judges-thumbnail').removeClass('inactive-hover');
-        return;
-      } else if ($(this).get(0).tagName == 'rect') {
-        // Grey out other districts
-        $('.district').addClass('inactive-hover');
-        $('.judges-thumbnail').addClass('inactive-hover');
-        $('.court-label').addClass('inactive-hover');
+        var temp = $(this).clone().appendTo($(this).parent()).removeClass('inactive-hover').addClass('active-hover');
+      }
+      else if (tag == 'rect') {
         // Highlight district boundary and text
         $('#'+String($( this ).attr('id'))).removeClass('inactive-hover').addClass('active-hover');
         $('text#'+String($( this ).attr('id'))).removeClass('inactive-hover');
-        // Highlight corresponding courts
-        $('.'+String($( this ).attr('id'))).addClass('active-hover');
-        $('.'+String($( this ).attr('id'))+' .judges-thumbnail').removeClass('inactive-hover');
-        $('.'+String($( this ).attr('id'))).siblings().removeClass('inactive-hover');
-        $('.active-court .judges-thumbnail').removeClass('inactive-hover');
       }
+      // Highlight corresponding courts
+      $('.'+String($( this ).attr('id'))).addClass('active-hover');
+      $('.'+String($( this ).attr('id'))+' .judges-thumbnail').removeClass('inactive-hover');
+      $('.'+String($( this ).attr('id'))).siblings().removeClass('inactive-hover');
+      $('.active-court .judges-thumbnail').removeClass('inactive-hover');
+      return;
     }).on('mouseleave','.district',  function() {
+      // Do nothing if map inactive
+      if (mapOpen == false) { return; }
       // Remove grey from courts
       $('.judges-thumbnail').removeClass('inactive-hover');
       $('.court-label').removeClass('inactive-hover');
+      // Save tag name
+      let tag = $(this).get(0).tagName;
       // Do nothing if hovering over territory label
-      if ($(this).get(0).tagName == 'text') {
-        return;
-      } else if ($(this).get(0).tagName == 'path') {
-        // Remove active and inactive classes from all districts
-        $('.district').removeClass('active-hover').removeClass('inactive-hover');
-        // Remove active class from all courts
-        $('.court').removeClass('active-hover');
-        // Remove original district from bottom of svg
+      if (tag == 'text') { return; }
+      // Remove active and inactive classes from all districts
+      $('.district').removeClass('active-hover').removeClass('inactive-hover');
+      // Remove active class from all courts
+      $('.court').removeClass('active-hover');
+      // Remove original district from bottom of svg
+      if (tag == 'path') {
         $( this ).remove();
         return;
-      } else if ($(this).get(0).tagName == 'rect') {
-        // Remove active and inactive classes from all districts
-        $('.district').removeClass('active-hover').removeClass('inactive-hover');
-        // Remove active class from all courts
-        $('.court').removeClass('active-hover');
       }
     });
 
 
     $(document).on('mouseenter','.court', function (event) {
       var classes = $( this ).attr('class').replace('court ', '').split(' ');
-      // classes.forEach(function(i) { console.log(i); });
       $('.'+String($( this ).attr('id'))).addClass('active-hover');
     }).on('mouseleave','.court',  function(){
       $('.'+String($( this ).attr('id'))).removeClass('active-hover');
@@ -129,11 +121,12 @@ function bindInteraction() {
     });
     $('#map-button').click(function() {
       if (!$(this).is(':checked')) {
-        $('#map-vis').css('pointer-events', 'all');
-        $('#map-vis').addClass('hidden');
-      }
-      else                         {
+        mapOpen = false;
         $('#map-vis').css('pointer-events', 'none');
+        $('#map-vis').addClass('hidden');
+      } else {
+        mapOpen = true;
+        $('#map-vis').css('pointer-events', 'all');
         $('#map-vis').removeClass('hidden');
       }
     });

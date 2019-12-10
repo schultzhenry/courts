@@ -1,7 +1,7 @@
 // LOAD RIGHT PANEL WITH APPROPRIATE COURT INFORMATION
 
 var toggleAllJudges = false;
-var column_names = [ 'Name', 'Appointing President', 'Appointing President Party', 'Commission', 'Years on Court', 'ABA Rating' ]
+var column_names = [ 'Judge', 'Appointing President', 'Party', 'Commission', 'Years on Court', 'ABA Rating' ]
 
 function findCourtData(n) {
   for (d of [ supreme_dictionary, appellate_dictionary, district_dictionary ]) {
@@ -12,41 +12,72 @@ function findCourtData(n) {
 
 function getJudgeInfo(d) {
   let years_on_court = '';
+  let commission = '';
   let year = '';
-  // let month = '';
-  // let date = '';
+  let month = '';
+  let date = '';
   let today = new Date();
   let c_year = today.getFullYear();
-  // let c_month = today.getMonth()+1;
-  // let c_date = today.getDate();
+  let t_year = '';
 
-  if (d['Commission Date'].indexOf('-') != -1) {
-    let str = d['Commission Date'].split('-');
-    year = str[0];
-    // month = str[1];
-    // date = str[2];
-  } else {
-    let str = d['Commission Date'].split('/');
-    // month = str[0];
-    // date = str[1];
-    // DEVELOP THIS FURTHER
-    if (d['Appointing President'] === 'Barack Obama' ||
-        d['Appointing President'] === 'George W. Bush' ||
-        d['Appointing President'] === 'Donald J. Trump' ||
-        (d['Appointing President'] === 'William J. Clinton' &&
-         (str[2] === '00' ||
-          str[2] === '01'))) {
-      year = '20'.concat(str[2]);
+  if (d['Commission Date'] !== '') {
+    if (d['Commission Date'].indexOf('-') != -1) {
+      let str = d['Commission Date'].split('-');
+      year = str[0];
+      month = str[1];
+      date = str[2];
+      month = (month.length == 2) ? month : '0'.concat(month);
+      date = (date.length == 2) ? date : '0'.concat(date);
     } else {
-      year = '19'.concat(str[2]);
+      let str = d['Commission Date'].split('/');
+      month = str[0];
+      date = str[1];
+      // DEVELOP THIS FURTHER
+      if (d['Appointing President'] === 'Barack Obama' ||
+          d['Appointing President'] === 'George W. Bush' ||
+          d['Appointing President'] === 'Donald J. Trump' ||
+          (d['Appointing President'] === 'William J. Clinton' &&
+           (str[2] === '00' ||
+            str[2] === '01'))) {
+        year = '20'.concat(str[2]);
+      } else {
+        year = '19'.concat(str[2]);
+      }
+    }
+    commission = year.concat('-',month,'-',date);
+
+    if (d['Termination Date'] !== '') {
+      if (d['Termination Date'].indexOf('-') != -1) {
+        let str = d['Termination Date'].split('-');
+        t_year = str[0];
+      } else {
+        let str = d['Termination Date'].split('/');
+        if (parseInt('19'.concat(str[2])) >= year) {
+          t_year = '19'.concat(str[2]);
+        } else if (parseInt('20'.concat(str[2])) >= year) {
+          t_year = '20'.concat(str[2]);
+        } else {
+          t_year = '19'.concat(str[2]);
+        }
+      }
+      years_on_court = years_on_court.concat(t_year - year);
+    } else {
+      years_on_court = years_on_court.concat(c_year - year);
     }
   }
-  years_on_court = years_on_court.concat(c_year - year);
+
+  if (d['Judge Name'] === 'Black, Hugo Lafayette') {
+    console.log(d['Commission Date'], d['Termination Date']);
+    console.log('t_year: ', t_year);
+    console.log('c_year: ', c_year);
+    console.log('year: ', year);
+  }
+
   return [
     ['name', d['Judge Name']],
     ['app_pres', d['Appointing President']],
     ['app_pres_party', d['Party of Appointing President']],
-    ['commission', d['Confirmation Date']],
+    ['commission', commission],
     ['years_on_court', years_on_court],
     ['aba_rating', d['ABA Rating']]
   ];
@@ -131,23 +162,27 @@ function populateRightPanel(n) {
       });
 
       s.append('span')
-        .text(function(d) { return d[1]; });
+        .text(function(d) {
+          if (d[1] === 'Exceptionally Well Qualified') { return 'Ex. Well Qualified'; }
+          return d[1];
+        });
 
       s.selectAll('div').each(function(d,i) {
-        console.log(d, i);
         if (d[0] === 'years_on_court') {
-          d3.select(this)
-            .selectAll('div')
-            .data(Array(parseInt(d[1])))
-            .enter()
-            .append('div')
-            .attr('background', 'blue')
-            .attr('class', 'year_on_court');
+          if (d[1] !== '') {
+            let temp = d3.select(this)
+              .append('div')
+              .attr('class', 'year-on-court-container');
 
-          d3.select(this)
-            .append('div')
-            .attr('background', 'blue')
-            .attr('class', 'year_on_court');
+            temp.selectAll('.year_on_court')
+              .data(function(d) { return (parseInt(d[1]) >= 0) ? Array(parseInt(d[1])) : 0; })
+              .enter()
+              .append('div')
+              .attr('class', 'year_on_court');
+
+            temp.append('div')
+              .attr('class', 'year_on_court');
+          }
         }
         return;
       });

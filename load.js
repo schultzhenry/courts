@@ -195,5 +195,3 @@ async function loadData() {
 loadData();
 setTimeout(function(){ console.log('Vis loaded. Binding interactions to vis...'); }, 700);
 setTimeout(function(){ bindInteraction(); }, 700);
-// setTimeout(function(){ $('#preview-screen').css('opacity', '0'); }, 750);
-// setTimeout(function(){ $('#preview-screen').remove(); }, 1000);

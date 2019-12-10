@@ -8,14 +8,14 @@ function drawMap(mapw, maph) {
       id: 'map-vis',
       class: 'hidden',
       width: 520,
-      height: 320,
+      height: 320
     })
-    .css('pointer-events', 'none')
     .append('g')
     .attrs({
       class: 'map',
       transform: "translate("+String((-mapw/2)+20)+","+String((maph/2)-230)+")"
-    });
+    })
+    $('#map-vis').css('pointer-events', 'none');
 
   // Draw county and district boundaries
   var path = d3.geoPath();
