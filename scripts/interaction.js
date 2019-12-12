@@ -1,25 +1,26 @@
 // HANDLE INTERACTION WITH MAP AND COURT VIS ELEMENTS
 
-function toggleVisibility(t,b) {
+function updatePresidentSelection() {
+  $('#judge-party-button').prop('checked', false);
+  $('circle').css('fill', 'gainsboro');
+  $('.Vacant').css('fill', 'none').css('stroke', 'grey');
   setTimeout(function() {
-    if (b) { $(t).show();
-    } else { $(t).hide(); }
-  }, 150);
+    if ($('#Donald-J-Trump').is(':checked'))    { $('.Donald-J-Trump').removeClass('nodeDefault').css('fill', 'orangered'); }
+    if ($('#Barack-Obama').is(':checked'))      { $('.Barack-Obama').removeClass('nodeDefault').css('fill', 'deepskyblue'); }
+    if ($('#George-W-Bush').is(':checked'))     { $('.George-W-Bush').removeClass('nodeDefault').css('fill', 'orchid'); }
+    if ($('#William-J-Clinton').is(':checked')) { $('.William-J-Clinton').removeClass('nodeDefault').css('fill', 'mediumblue'); }
+    if ($('#George-HW-Bush').is(':checked'))    { $('.George-HW-Bush').removeClass('nodeDefault').css('fill', 'maroon'); }
+    if ($('#Ronald-Reagan').is(':checked'))     { $('.Ronald-Reagan').removeClass('nodeDefault').css('fill', 'red'); }
+  }, 100);
 }
 
 function bindInteraction() {
 
-    // Detail, map hidden on default
-    var detailPanelOpen = false;
-    var mapOpen = false;
-    var activeCourt = '';
-    var presidentIdList = '#Donald-J-Trump, #Barack-Obama, #George-W-Bush, #William-J-Clinton, #George-HW-Bush, #Ronald-Reagan';
-
     // Open detail panel on court click
     $('.court').click(function() {
       activeCourt = f2(this.id);
-      populateRightPanel(activeCourt);
-      toggleVisibility('#detail-panel', true);
+      loadDetail(activeCourt);
+      toggleVis('#detail-panel', true);
     });
 
     // Handle hovering over districts on map
@@ -83,11 +84,6 @@ function bindInteraction() {
       }
     });
 
-    $('#about-button').click(function() {
-      setTimeout(function(){ $('#preview-screen').css('opacity', '1'); }, 100);
-      setTimeout(function(){ $('#preview-screen').css('pointer-events', 'all'); }, 200);
-    });
-
     $('#map-button').click(function() {
       if (!$(this).is(':checked')) {
         mapOpen = false;
@@ -99,6 +95,7 @@ function bindInteraction() {
         $('#map-vis').show();
       }
     });
+
     $('#judge-party-button').click(function() {
       if ($(this).is(':checked')) {
         $('#Donald-J-Trump').prop("checked", false);
@@ -131,26 +128,12 @@ function bindInteraction() {
       if ($(this).is(':checked')) {
         toggleAllJudges = true;
         $(this).parent().attr('class');
-        populateRightPanel(activeCourt);
+        loadDetail(activeCourt);
       } else {
         toggleAllJudges = false;
-        populateRightPanel(activeCourt);
+        loadDetail(activeCourt);
       }
     });
-
-    function updatePresidentSelection() {
-      $('#judge-party-button').prop('checked', false);
-      $('circle').css('fill', 'gainsboro');
-      $('.Vacant').css('fill', 'none').css('stroke', 'grey');
-      setTimeout(function() {
-        if ($('#Donald-J-Trump').is(':checked'))    { $('.Donald-J-Trump').removeClass('nodeDefault').css('fill', 'orangered'); }
-        if ($('#Barack-Obama').is(':checked'))      { $('.Barack-Obama').removeClass('nodeDefault').css('fill', 'deepskyblue'); }
-        if ($('#George-W-Bush').is(':checked'))     { $('.George-W-Bush').removeClass('nodeDefault').css('fill', 'orchid'); }
-        if ($('#William-J-Clinton').is(':checked')) { $('.William-J-Clinton').removeClass('nodeDefault').css('fill', 'mediumblue'); }
-        if ($('#George-HW-Bush').is(':checked'))    { $('.George-HW-Bush').removeClass('nodeDefault').css('fill', 'maroon'); }
-        if ($('#Ronald-Reagan').is(':checked'))     { $('.Ronald-Reagan').removeClass('nodeDefault').css('fill', 'red'); }
-      }, 100);
-    }
 
     $(presidentIdList).click(function() {
       $('#All').prop('checked', false);
@@ -168,12 +151,8 @@ function bindInteraction() {
       }
     });
 
-    $('#close-preview-screen').click(function() {
-      setTimeout(function(){ $('#preview-screen').css('opacity', '0'); }, 100);
-      setTimeout(function(){ $('#preview-screen').css('pointer-events', 'none'); }, 200);
-    });
-
-    $('#detail-x').click(function() {
-      toggleVisibility('#detail-panel', false);
-    });
+    // Toggle preview and detail screens on button clicks
+    $('#about-button').click(function()         { toggleVis('#preview-screen', true); });
+    $('#close-preview-screen').click(function() { toggleVis('#preview-screen', false); });
+    $('#detail-x').click(function()             { toggleVis('#detail-panel', false); });
 }

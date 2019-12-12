@@ -1,28 +1,18 @@
 // LOAD AND TRANSFORM CSV DATA
+
 // DATA SOURCE: FEDERAL JUDICIAL CENTER
 // fjc.gov/history/judges/biographical-directory-article-iii-federal-judges-export
 
 $('#detail-panel').hide();
 
-console.log('Hang on a moment; loading data...');
-
-// FORMAT STRINGS
-function f(s) { return s.replace(/ /g, '-'); }
-function f2(s) { return s.replace('-', ' '); }
-
 async function loadData() {
   // LOAD CSV JUDGE DATA
   d3.csv('data/federal-judicial-service.csv', function(federal_judicial_service) {
-    d3.csv('data/judges.csv', function(judges) {
-      // MERGE POSITION-BASED AND BIOGRAPHY-BASED DATASETS INTO ONE ARRAY
-      // var all_judges = judges.map(x => Object.assign(x, federal_judicial_service.find(y => y.nid == x.nid)));
       // GROUP JUDGE DATA BY COURT
       let group = federal_judicial_service.reduce((r, a) => {
         r[a['Court Name']] = [...r[a['Court Name']] || [], a];
         return r;
         }, {});
-
-      console.log('Load Complete. Populating visualization...');
 
       function getCurrentJudges(name) {
         judge_list = [];
@@ -53,9 +43,9 @@ async function loadData() {
       }
 
       // UPDATE CONSTANT DICTIONARIES FROM CONSTANTS.JS WITH FULL JUDGE DATA PULLED FROM CSVS
-      updateConstantDictionary(s_d[0]);                                // SUPREME
-      $.each(a_d, function(i, v) { updateConstantDictionary(v); })   // APPELLATE
-      $.each(d_d, function(i, v) { updateConstantDictionary(v); })    // DISTRICT
+      updateConstantDictionary(s_d[0]);                                          //   SUPREME
+      $.each(a_d, function(i, v) { updateConstantDictionary(v); })               // APPELLATE
+      $.each(d_d, function(i, v) { updateConstantDictionary(v); })               //  DISTRICT
 
       function judgeNodeClass(level, name) {
         if (level === 'supreme') { return s_d[0];
@@ -75,6 +65,7 @@ async function loadData() {
         var center = {x: w/2, y: h/2};
         var forceStrength = 0.05;
         var radius = 2.65;
+
         // APPEND SVG
         var svg = selection.selectAll(".court")
           .append("svg")
@@ -196,11 +187,8 @@ async function loadData() {
       loadLevel('appellate', 'Appellate');
       loadLevel('district', 'District');
 
-
-    });
   });
 };
 
 loadData();
-setTimeout(function(){ console.log('Vis loaded. Binding interactions to vis...'); }, 700);
 setTimeout(function(){ bindInteraction(); }, 700);

@@ -1,18 +1,6 @@
 // LOAD RIGHT PANEL WITH APPROPRIATE COURT INFORMATION
 
-var toggleAllJudges = false;
-var column_names = [ 'Judge', 'Appointing President', 'Party', 'Commission', 'Years on Court', 'ABA Rating' ]
-
-function findCourtData(n) {
-  for (d of [ s_d, a_d, d_d ]) {
-    for (i of d) {
-      if (n === i['name']) {
-        return i;
-      }
-    }
-  }
-  return;
-}
+function findCourtData(n) { for (d of [ s_d, a_d, d_d ]) { for (i of d) { if (n === i['name']) { return i; } } } return; }
 
 function getJudgeInfo(d) {
   let years_on_court = '';
@@ -82,7 +70,7 @@ function getJudgeInfo(d) {
   ];
 }
 
-function populateRightPanel(n) {
+function loadDetail(n) {
 
   let lnamel = findCourtData(n)['lname'];
   if (Array.isArray(lnamel)) { lnamel = lnamel[1]; };

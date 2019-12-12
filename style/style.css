@@ -133,6 +133,7 @@ h3 {
   display: flex;
   flex-direction: column;
   text-align: center;
+  height: Calc(100vh - (7 * Var(--outer-border)));
 }
 
 #right-vis {
@@ -236,12 +237,14 @@ h1 {
   transition: all 0.6s;
   text-align: center;
   font-size: 36px;
+  pointer-events: none;
 }
 
 h2 {
   font-size: 18px;
   font-weight: 400;
   margin-top: -4px;
+  pointer-events: none;
 }
 
 .level-label {
@@ -279,18 +282,6 @@ h2 {
     2px -2px 1px white,
     -2px 2px 1px white,
      2px 2px 1px white;
-}
-
-#right-panel-toggle {
-  transition: all 0.6s;
-  text-align: right;
-  position: fixed;
-  top: Calc(100% - (Var(--outer-border) * 3.5));
-  right: Calc(Var(--outer-border));
-  width: Calc(Var(--outer-border) * 2);
-  height: Calc(Var(--outer-border));
-  margin: 0px;
-  padding: 0px;
 }
 
 svg {
@@ -369,6 +360,7 @@ svg {
 #district-level {
   overflow-y: scroll;
   flex: 1;
+  height: 100%;
 }
 
 #map-vis {
@@ -451,18 +443,15 @@ circle.Democratic {
   fill: dodgerblue;
 }
 
-/* circle.Donald-J-Trump { fill: yellow; } */
-/* circle.Barack-Obama   { fill: blue; } */
-
 .inactive-hover circle.Republican { fill: #ffcccc; }
 
 .inactive-hover circle.Democratic { fill: #cce0ff; }
 
 circle { pointer-events: none; }
 
-#overview-footer, #right-footer {
-  width: Calc(100%-(2*Var(--outer-border)));
+#overview-footer {
   bottom: 0px;
+  width: Calc(100vw-(2*Var(--outer-border)));
   height: Calc(3 * Var(--outer-border));
   padding-top: Var(--outer-border);
   padding-bottom: Var(--outer-border);
@@ -482,13 +471,13 @@ circle { pointer-events: none; }
 }
 
 #overview-footer-right-buttons {
-  padding-right: Var(--inner-border);
+  /* padding-right: Var(--inner-border); */
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
 
-#overview-footer-left-buttons .footer-button {
+#overview-footer-left-buttons .footer-button, #overview-footer-right-buttons .footer-button {
   padding-left: Var(--outer-border);
   align-self: flex-end;
   font-size: 18px;
@@ -552,6 +541,14 @@ input.footer-button {
 .footer-dropdown:hover .dropdown-content {
   display: block;
 }
+
+a {
+  text-decoration: none;
+  font-weight: normal;
+  color: black;
+}
+
+a:hover { border-bottom: 1px solid Var(--line-color); }
 
 /* MAKE SURE THIS NODEDEFAULT STYLE IS AT THE BOTTOM  */
 /* IMPORTANT FOR RENDERING JUDGE COLORS APPROPRIATELY */
