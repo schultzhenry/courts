@@ -1,101 +1,157 @@
 <!DOCTYPE html>
+
 <head>
+  <!-- Document Style -->
   <meta charset="utf-8">
-  <title>Federal Judiciary</title>
   <link rel="icon" type="image/png" href="style/icon.png">
-  <script src="packages/d3.v4.js"></script>
+  <link rel="stylesheet" type ="text/css" href ="style/style.css"/>
+
+  <!-- JQuery, D3V4, D3 Selection, D3 TopoJSON -->
   <script src="packages/jquery-3.4.1.min.js"></script>
+  <script src="packages/d3.v4.js"></script>
   <script src="packages/d3.selection-multi.1.0.1.min.js"></script>
   <script src="packages/d3.topojson.3.0.2.min.js"></script>
+
+  <!-- Include Google Fonts -->
+
+  <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Gelasio:400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:400,400i&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type ="text/css" href ="style/overview.css"/>
+
+  <!-- Document Style -->
+  <link rel="icon" type="image/png" href="style/icon.png">
+  <link rel="stylesheet" type ="text/css" href ="style/style.css"/>
+
+  <!-- Title -->
+  <title>Federal Judiciary Interactive</title>
 </head>
+
 <body>
-  <div id="view">
-    <div id="preview-screen">
-      <div id="about-page-container">
-        <h1>Understanding the United States Federal Judiciary</h1>
-        <h3>Welcome to this interactive visualization of the American federal court system.
-          Upon closing this page, you will find an overview chart with Supreme, Appellate, and District courts.
-          Each circle on the overview chart represents a judge currently serving on one court.
-          By default, judges are highlighted according to the political party of the president who appointed them.
-          To remove this highlight or to select other highlight options, use the checkboxes on the bottom left of the page.
-          Please note this visualization does not include Article I courts.</h3>
-        <h3>This website was created by Natalie Schultz-Henry in the fall of 2019 in fulfillment of her senior project in Computing and the Arts at Yale University.</h3>
-      </div>
-      <div id="close-preview-screen">╳</div>
+
+  <!-- Informational screen pops up upon site visit -->
+  <!-- User can re-open using "about" button -->
+  <div id="preview-screen">
+    <div id="preview-screen-container">
+      <h1>Welcome to the Federal Judiciary Interactive!</h1>
+      <h3>This is an interactive visualization of the American federal court system.
+        Upon closing this page, you will find an overview chart with Supreme, Appellate, and District courts.
+        Each circle on the overview chart represents a judge currently serving on one court.
+        By default, judges are highlighted according to the political party of the president who appointed them.
+        To remove this highlight or to select other highlight options, use the checkboxes on the bottom left of the page.
+        Please note this visualization does not include Article I courts.</h3>
+      <h3>This website was created by Natalie Schultz-Henry in the fall of 2019 in fulfillment of her senior project in Computing and the Arts at Yale University.</h3>
     </div>
-    <div id="left-panel">
-      <div id="left-header" class="header">
-        <h1>Federal Judiciary of the United States</h1>
+    <div id="close-preview-screen">
+      <svg width="24px" height="24px">
+        <line x1="0" y1="0" x2="24" y2="24" stroke="black" />
+        <line x1="24" y1="0" x2="0" y2="24" stroke="black" />
+      </svg>
+    </div>
+  </div>
+
+  <div id="view">
+    <div id="overview-panel">
+
+      <div id="overview-header" class="header">
+        <h1>Federal Judiciary Interactive</h1>
       </div>
-      <div id="left-vis" class="vis">
+
+      <div id="overview-vis" class="vis">
         <div id="supreme-level">
-          <h2>Supreme Court</h2>
+          <h2 class="level-label">Supreme Court</h2>
           <div class="court-space">
           </div>
         </div>
         <div id="appellate-level">
-          <h2>Appellate Courts</h2>
+          <h2 class="level-label">Appellate Courts</h2>
           <div class="court-space">
           </div>
         </div>
         <div id="district-level">
-          <h2>District Courts</h2>
+          <h2 class="level-label">District Courts</h2>
+          <div id="legend">
+            <h2>Legend</h2>
+            <h2>TO FINISH</h2>
+            <!-- <h2>Active Judgeship</h2> -->
+            <!-- <h2>Vacant Judgeship</h2> -->
+          </div>
           <div class="court-space">
           </div>
         </div>
       </div>
-      <div id="left-footer" class="footer">
-        <div id="left-footer-left-buttons">
+
+      <div id="overview-footer" class="footer">
+        <div id="overview-footer-left-buttons">
           <div   class="footer-button" id="about-button">About</div>
-          <label class="footer-button" for="map-button">Map</label>
-          <input class="footer-button" type="checkbox" id="map-button" name="map-button" value="map-checked">
-          <label class="footer-button" for="judge-party-button">Party</label>
-          <input class="footer-button" type="checkbox" id="judge-party-button" name="judge-party-button" value="president-checked" checked>
-          <label class="footer-button" for="judge-president-button">
-            <div class="pres-option hidden" value="Donald-J.-Trump">Donald J. Trump</div>
-            <div class="pres-option hidden" value="Barack-Obama">Barack Obama</div>
-            <div class="pres-option hidden" value="George-W.-Bush">George W. Bush</div>
-            <div class="pres-option hidden" value="William-J.-Clinton">William J. Clinton</div>
-            <div class="pres-option hidden" value="George-H.W.-Bush">George H.W. Bush</div>
-            <div class="pres-option hidden" value="Ronald-Reagan">Ronald Reagan</div>
-            President
-          </label>
+          <label class="footer-button" id="map-button-label"         for="map-button">Map</label>
+          <input class="footer-button" id="map-button"               type="checkbox" name="map-button" value="map-checked">
+          <label class="footer-button" id="judge-party-button-label" for="judge-party-button">Party</label>
+          <input class="footer-button" id="judge-party-button"       type="checkbox" name="judge-party-button" value="judge-checked">
 
-          <input class="footer-button" type="checkbox" id="judge-president-button" name="judge-president-button" value="president-checked">
-          <!-- <div   class="footer-button" id="judge-president-button"> -->
-
-            <!-- President -->
-          <!-- </div> -->
-          <!-- <label class="footer-button" for="judge-president-button">President</label> -->
-          <!-- <input class="footer-button" type="checkbox" id="judge-president-button" name="judge-president-button" value="president-checked"> -->
-        </div>
-        <div id='left-footer-right-buttons'>
-          <div   class="footer-button" id="right-panel-button">
-            <p id="right-panel-button-text">←</p>
+          <div class="footer-dropdown">
+            <div class="footer-button">President</div>
+            <div class="dropdown-content">
+              <div class="dropdown-row">
+                <label class="pres-option-label" for="Donald-J-Trump">Donald J. Trump</label>
+                <input class="pres-option"        id="Donald-J-Trump" type="checkbox" value="Donald-J-Trump"/>
+              </div>
+              <div class="dropdown-row">
+                <label class="pres-option-label" for="Barack-Obama">Barack Obama</label>
+                <input class="pres-option"        id="Barack-Obama" type="checkbox" value="Barack-Obama"/>
+              </div>
+              <div class="dropdown-row">
+                <label class="pres-option-label" for="George-W-Bush">George W. Bush</label>
+                <input class="pres-option"        id="George-W-Bush" type="checkbox" value="George-W-Bush"/>
+              </div>
+              <div class="dropdown-row">
+                <label class="pres-option-label" for="William-J-Clinton">William J. Clinton</label>
+                <input class="pres-option"        id="William-J-Clinton" type="checkbox" value="William-J-Clinton"/>
+              </div>
+              <div class="dropdown-row">
+                <label class="pres-option-label" for="George-HW-Bush">George H.W. Bush</label>
+                <input class="pres-option"        id="George-HW-Bush" type="checkbox" value="George-HW-Bush"/>
+              </div>
+              <div class="dropdown-row">
+                <label class="pres-option-label" for="Ronald-Reagan">Ronald Reagan</label>
+                <input class="pres-option"        id="Ronald-Reagan" type="checkbox" value="Ronald-Reagan"/>
+              </div>
+              <div class="dropdown-row">
+                <label class="pres-option-label" for="All">Toggle All</label>
+                <input class="pres-option"        id="All" type="checkbox" value="All"/>
+              </div>
+            </div>
           </div>
+
         </div>
+        <div id='overview-footer-right-buttons'></div>
       </div>
     </div>
-    <div id="right-panel">
-      <div id="right-header" class="header">
-        <h1></h1>
+    <div id="detail-panel">
+      <div id="detail-body">
+        <div id="detail-x">
+          <svg width="24px" height="24px">
+            <line x1="0" y1="0" x2="24" y2="24" stroke="black" />
+            <line x1="24" y1="0" x2="0" y2="24" stroke="black" />
+          </svg>
+        </div>
+        <div id="detail-header" class="header">
+          <h1></h1>
+        </div>
+        <div id="detail-vis" class="vis">
+          <div id="court-timeline"></div>
+          <div id="judge-table-space"></div>
+          <div id="judge-table-footer">
+            <label class="footer-button" for="judge-button">Show All Judges</label>
+            <input class="footer-button" type="checkbox" id="judge-button" name="judge-button" value="judge-checked"></div>
+        </div>
       </div>
-      <div id="right-vis" class="vis">
-        <div id="judge-table-space"></div>
-        <div id="judge-table-footer">
-          <label class="footer-button" for="judge-button">Show All Judges</label>
-          <input class="footer-button" type="checkbox" id="judge-button" name="judge-button" value="judge-checked"></div>
-      </div>
-      <div id="right-footer" class="footer"></div>
     </div>
   </div>
   <script src="scripts/interaction.js"></script>
   <script src="data/constants.js"></script>
-  <script src="scripts/courts.js"></script>
   <script src="scripts/load.js"></script>
   <script src="scripts/map.js"></script>
   <script src="scripts/panel.js"></script>
+  <!-- <script src="data/courts.js"></script> -->
 </body>

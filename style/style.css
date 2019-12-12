@@ -1,8 +1,8 @@
 :root {
-  --border-color: #EBDCD2;
+  --border-color: white;
   --light-line-color: lightGrey;
   --line-color: black;
-  --outer-border: 12px;
+  --outer-border: 24px;
   --inner-border: Calc(Var(--outer-border));
   --left-width: 100%;
   --right-width: 0%;
@@ -20,7 +20,7 @@ body {
 }
 
 * {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'EB Garamond', sans-serif;
   line-height: 1.15em;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -28,12 +28,12 @@ body {
 }
 
 #preview-screen {
-  transition: all 0.3s;
+  transition: all 0.1s;
   position: fixed;
   z-index: 1000;
   width: 100%;
   height: 100%;
-  background: whiteSmoke;
+  background: Var(--border-color);
 }
 
 #close-preview-screen {
@@ -48,13 +48,14 @@ body {
 
 h3 {
   font-weight: lighter;
-  font-size: 21px;
+  font-size: 18px;
 }
 
-#about-page-container {
-  width: 620px;
+#preview-screen-container {
+  width: 500px;
   margin: auto;
 }
+
 #view {
   display: flex;
   margin: 0px;
@@ -64,15 +65,38 @@ h3 {
   flex-direction: row;
 }
 
-#left-panel {
+#overview-panel {
   width: Var(--left-width);
 }
 
-#right-panel {
-  width: Var(--right-width);
+#detail-panel {
+  transition: all 0.2s;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  z-index: 2000;
 }
 
-#left-panel, #right-panel {
+#detail-x {
+  position: fixed;
+  top: Calc(2 * Var(--outer-border));
+  right: Calc((100% - 820px)/2 + Var(--outer-border));
+  cursor: pointer;
+}
+
+#detail-body {
+  width: 820px;
+  height: Calc(100% - 2*Var(--outer-border));
+  margin-top: Var(--outer-border);
+  margin-bottom: Var(--outer-border);
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid Var(--line-color);
+  background: Var(--border-color);
+}
+
+#overview-panel, #detail-panel {
   transition: all 0.6s;
   top: 0px;
   padding: 0px;
@@ -93,18 +117,16 @@ h3 {
 }
 
 .header {
-  height: 6%;
+  height: Calc(4*Var(--outer-border));
 }
 
 .vis {
   border-left: Var(--outer-border) solid Var(--border-color);
   border-right: Var(--outer-border) solid Var(--border-color);
-  border-bottom: Var(--outer-border) solid Var(--border-color);
   width: 100%;
-  height: Calc(94%);
 }
 
-#left-vis {
+#overview-vis {
   border-right: Var(--inner-border) solid Var(--border-color);
   overflow-x: hidden;
   overflow-y: auto;
@@ -118,10 +140,20 @@ h3 {
   border-left: Var(--inner-border) solid Var(--border-color);
 }
 
+#court-timeline {
+  height: Calc(16*Var(--outer-border));
+  border-top: 1px solid Var(--line-color);
+  padding-top: Var(--outer-border);
+  padding-bottom: Var(--outer-border);
+  overflow-y: scroll;
+  font-size: 18px;
+  line-height: 1.35em;
+}
+
 #judge-table-space {
-  background: white;
-  border: 1px solid Var(--line-color);
-  height: Calc(50vh - Var(--outer-border));
+  background: Var(--border-color);
+  border-top: 1px solid Var(--line-color);
+  height: Calc(100vh - 25*Var(--outer-border));
   position: relative;
   overflow-y: scroll;
   margin: auto;
@@ -132,11 +164,15 @@ h3 {
   width: 100%;
   overflow-y: scroll;
   border-collapse: collapse;
+  font-size: 14px;
 }
 
 #judge-table-footer {
-  height: Calc(4 * Var(--outer-border));
+  background: Var(--border-color);
+  position: relative;
+  height: Calc(3 * Var(--outer-border));
   padding-top: Var(--outer-border);
+  border-top: 1px solid Var(--line-color);
 }
 
 #judge-table tbody {
@@ -146,7 +182,6 @@ h3 {
 
 #judge-table th {
   font-weight: 500;
-  font-size: 14px;
   line-height: 1.5em;
   text-align: left;
   padding-right: 8px;
@@ -156,6 +191,10 @@ h3 {
 #judge-table td, #judge-table th {
   padding: 4px;
 }
+
+td span { font-family: 'Barlow Condensed', sans-serif; }
+
+td .mono { font-family: 'Anonymous Pro', monospace; }
 
 td div {
   position: relative;
@@ -192,15 +231,20 @@ td.vacancy {
 }
 
 h1 {
-  font-family: Gelasio;
-  font-weight: 600;
-  padding-top: 12px;
+  font-weight: 400;
+  padding-top: 4px;
   transition: all 0.6s;
   text-align: center;
-  font-size: 28px;
+  font-size: 36px;
 }
 
 h2 {
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: -4px;
+}
+
+.level-label {
   pointer-events: none;
   transition: all 0.6s;
   text-shadow:
@@ -214,12 +258,27 @@ h2 {
      2px 2px 1px white;
   position: fixed;
   text-align: left;
-  font-weight: 400;
-  font-size: 18px;
   margin: 0px;
   padding: 0px;
-  margin-top: -4px;
-  padding-left: Var(--inner-border);
+}
+
+#legend {
+  border-top: 1px solid Var(--line-color);
+  padding-top: Var(--outer-border);
+  /* background: Var(--border-color); */
+  position: fixed;
+  top: Calc(12 * Var(--outer-border));
+  left: Var(--outer-border);
+  text-align: left;
+  text-shadow:
+   -1px -1px 1px white,
+    1px -1px 1px white,
+    -1px 1px 1px white,
+     1px 1px 1px white,
+   -2px -2px 1px white,
+    2px -2px 1px white,
+    -2px 2px 1px white,
+     2px 2px 1px white;
 }
 
 #right-panel-toggle {
@@ -243,15 +302,15 @@ svg {
 .court {
   pointer-events: all;
   height: 27px;
-  max-width: 52px;
+  width: 52px;
   border: 1px solid lightGrey;
   margin: auto;
   transition: all 0.2s;
   background: whiteSmoke;
-  z-index: 1000;
 }
 
 .court:hover, .active-hover {
+  cursor: pointer;
   background: lemonChiffon;
   border: 1px solid black;
 }
@@ -275,24 +334,28 @@ svg {
 }
 
 .court-label {
+  font-family: 'Barlow Condensed', sans-serif;
   pointer-events: none;
   text-align: center;
   font-size: 12px;
   padding: 0px;
   margin: 0px;
-  padding-top: 2px;
-  padding-bottom: 6px;
+  padding-top: 1px;
+  margin-bottom: -2px;
   font-weight:lighter;
 }
 
+.court-box { padding-bottom: 8px; }
+
 .appellate-column {
   border-left: 1px solid Var(--light-line-color);
-  flex: 1;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
-  flex-basis: 72px;
+  width: 72px;
   flex-grow: 0;
+  margin-bottom: 10px;
 }
 
 #supreme-level .appellate-column, #Federal.appellate-column, #Federal-Circuit.appellate-column {
@@ -300,19 +363,17 @@ svg {
 }
 #supreme-level, #appellate-level, #district-level {
   flex: 0;
-  padding-top: 12px;
-  border: 1px solid Var(--line-color);
-  border-bottom: none;
+  padding-top: Calc(Var(--outer-border) / 2);
+  border-top: 1px solid Var(--line-color);
 }
 #district-level {
   overflow-y: scroll;
-  border-bottom: 1px solid Var(--line-color);
   flex: 1;
 }
 
 #map-vis {
   position: fixed;
-  bottom: Calc(5 * Var(--outer-border));
+  bottom: Calc(4 * Var(--outer-border));
   left: Var(--outer-border);
 }
 
@@ -390,47 +451,56 @@ circle.Democratic {
   fill: dodgerblue;
 }
 
-.inactive-hover circle.Republican {
-  fill: #ffcccc;
-}
+/* circle.Donald-J-Trump { fill: yellow; } */
+/* circle.Barack-Obama   { fill: blue; } */
 
-.inactive-hover circle.Democratic {
-  fill: #cce0ff;
-}
+.inactive-hover circle.Republican { fill: #ffcccc; }
 
-circle {
-  pointer-events: none;
-}
+.inactive-hover circle.Democratic { fill: #cce0ff; }
 
-#left-footer, #right-footer {
-  width: 100%;
+circle { pointer-events: none; }
+
+#overview-footer, #right-footer {
+  width: Calc(100%-(2*Var(--outer-border)));
   bottom: 0px;
   height: Calc(3 * Var(--outer-border));
+  padding-top: Var(--outer-border);
   padding-bottom: Var(--outer-border);
+  margin-left: Var(--outer-border);
+  margin-right: Var(--outer-border);
+  border-top: 1px solid Var(--line-color);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-#left-footer-left-buttons {
+#overview-footer-left-buttons {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 }
 
-#left-footer-right-buttons {
+#overview-footer-right-buttons {
   padding-right: Var(--inner-border);
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
 
-#left-footer-left-buttons .footer-button {
+#overview-footer-left-buttons .footer-button {
   padding-left: Var(--outer-border);
   align-self: flex-end;
   font-size: 18px;
   cursor: pointer;
+}
+
+label.footer-button {
+  padding-right: 2px;
+}
+
+#about-button.footer-button {
+  padding-left: 0;
 }
 
 #right-panel-button {
@@ -443,6 +513,7 @@ circle {
 .footer-button .hidden {
   display: none;
 }
+
 .footer-button .pres-option {
   position: relative;
 }
@@ -452,8 +523,34 @@ input.footer-button {
   margin-bottom: 2px;
 }
 
-.pres-option {
-  transform: translate(0px, -60px);
+.footer-dropdown {
+  position: relative;
+  display: inline-block;
+  min-width: 200px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  bottom: Var(--outer-border);
+  min-width: 200px;
+  padding: Var(--outer-border);
+  padding-bottom: Calc(0.25*Var(--outer-border));
+  border-top: 1px solid Var(--line-color);
+}
+
+.dropdown-content .dropdown-row {
+  color: black;
+  padding-bottom: 10px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.footer-dropdown:hover .dropdown-content {
+  display: block;
 }
 
 /* MAKE SURE THIS NODEDEFAULT STYLE IS AT THE BOTTOM  */

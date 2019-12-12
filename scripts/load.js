@@ -2,10 +2,13 @@
 // DATA SOURCE: FEDERAL JUDICIAL CENTER
 // fjc.gov/history/judges/biographical-directory-article-iii-federal-judges-export
 
+$('#detail-panel').hide();
+
 console.log('Hang on a moment; loading data...');
 
 // FORMAT STRINGS
-function f(s) { return s.replace(' ', '-'); }
+function f(s) { return s.replace(/ /g, '-'); }
+function f2(s) { return s.replace('-', ' '); }
 
 async function loadData() {
   // LOAD CSV JUDGE DATA
@@ -50,16 +53,16 @@ async function loadData() {
       }
 
       // UPDATE CONSTANT DICTIONARIES FROM CONSTANTS.JS WITH FULL JUDGE DATA PULLED FROM CSVS
-      updateConstantDictionary(supreme_dictionary[0]);                                // SUPREME
-      $.each(appellate_dictionary, function(i, v) { updateConstantDictionary(v); })   // APPELLATE
-      $.each(district_dictionary, function(i, v) { updateConstantDictionary(v); })    // DISTRICT
+      updateConstantDictionary(s_d[0]);                                // SUPREME
+      $.each(a_d, function(i, v) { updateConstantDictionary(v); })   // APPELLATE
+      $.each(d_d, function(i, v) { updateConstantDictionary(v); })    // DISTRICT
 
       function judgeNodeClass(level, name) {
-        if (level === 'supreme') { return supreme_dictionary[0];
+        if (level === 'supreme') { return s_d[0];
         } else if (level === 'appellate') {
-          for (i of appellate_dictionary) { if (i.name === name) { return i; }; };
+          for (i of a_d) { if (i.name === name) { return i; }; };
         } else if (level === 'district') {
-          for (i of district_dictionary) { if (i.name === name) { return i; }; };
+          for (i of d_d) { if (i.name === name) { return i; }; };
         }
       };
 
@@ -96,9 +99,15 @@ async function loadData() {
           .data(nodes).enter().append("circle")
           .attr("r", function(d){  return d.r })
           .attr('class', function(d, i) {
+            let c = 'nodeDefault ';
             let nodeData = judgeNodeClass(level, name.replace('-', ' ')).judges_curr[i];
-            if (!nodeData) { return 'Vacant'; }
-            return nodeData['Party of Appointing President'];
+            if (!nodeData) { return c.concat('Vacant'); }
+            else {
+              c = c.concat(nodeData['Party of Appointing President']);
+              c = c.concat(' ');
+              c = c.concat(f(nodeData['Appointing President']).replace(/\./g, ''));
+            }
+            return c;
           });
         function ticked() { node
           .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(w - radius, d.x)); })
@@ -111,7 +120,7 @@ async function loadData() {
         var selection = d3.select("#"+level+"-level .court-space");
         if (level === 'appellate' ) {
           // NEST COURTS BY CIRCUIT
-          const nest = d3.nest().key(d => d.column).entries(appellate_dictionary);
+          const nest = d3.nest().key(d => d.column).entries(a_d);
           // ADD GROUP FOR EACH CIRCUIT
           const group = selection.selectAll('.appellate-column')
             .data(nest).enter()
@@ -124,19 +133,19 @@ async function loadData() {
             .append('div').attr('class', function(d) { return 'court c'+String(d.jdcode).split(',').join(' c'); })
             .attr("id", function(d) { return f(d.name); });
           // COURT LABELS
-          group.data(appellate_dictionary)
+          group.data(a_d)
             .append('p').attr('class', 'court-label')
             .text(function(d) { return d.name; })
             .attr('id', function(d) { return String(d.name)+'-label'; });
           // POPULATE JUDGES
-          appellate_dictionary.forEach(function(entry) {
+          a_d.forEach(function(entry) {
             selection = d3.select("div #"+f(entry.name)+".appellate-column");
             populateJudges('appellate', selection, f(entry.name), entry.size);
           });
         }
         else if (level === 'district') {
           // NEST COURTS BY CIRCUIT
-          const nest = d3.nest().key(d => d.column).entries(district_dictionary);
+          const nest = d3.nest().key(d => d.column).entries(d_d);
           // ADD GROUP FOR EACH CIRCUIT
           const group = selection.selectAll('.appellate-column')
             .data(nest).enter()
@@ -155,11 +164,11 @@ async function loadData() {
             .attr("id", function(d) { return f(d.name); });
           // ADD LABELS
           selection.selectAll('.court-box')
-            .data(district_dictionary).append('p').attr('class', 'court-label')
+            .data(d_d).append('p').attr('class', 'court-label')
             .attr('id', function(d) { return f(d.name)+'-label'; })
             .text(function(d) { return d.name; });
           // POPULATE JUDGES
-          for (i of district_dictionary) {
+          for (i of d_d) {
             selection = d3.select("div #"+f(i.name)+"-box.court-box");
             populateJudges('district', selection, f(i.name), i.size);
           }
@@ -167,18 +176,18 @@ async function loadData() {
         else if (level === 'supreme') {
           var selection = selection.append('div').attr('class', 'appellate-column');
           selection.selectAll(".court")
-            .data(supreme_dictionary)
+            .data(s_d)
             .enter().append("div")
             .attr("id", function(d) { return d.name.replace(' ', '-');})
             .attr('class', function(d) { return 'court c'+String(d.jdcode).split(',').join(' c'); });
           selection.selectAll('.court-label')
-            .data(supreme_dictionary)
+            .data(s_d)
             .enter()
             .append("p")
             .attr('class', 'court-label')
             .attr('id', level+'-label' )
             .text(function(d) { return d.name; });
-          populateJudges('supreme', selection, 'Supreme Court', supreme_dictionary[0].size);
+          populateJudges('supreme', selection, 'Supreme Court', s_d[0].size);
         }
       };
 

@@ -4,8 +4,12 @@ var toggleAllJudges = false;
 var column_names = [ 'Judge', 'Appointing President', 'Party', 'Commission', 'Years on Court', 'ABA Rating' ]
 
 function findCourtData(n) {
-  for (d of [ supreme_dictionary, appellate_dictionary, district_dictionary ]) {
-    for (i of d) { if (n === i['name']) { return i; } }
+  for (d of [ s_d, a_d, d_d ]) {
+    for (i of d) {
+      if (n === i['name']) {
+        return i;
+      }
+    }
   }
   return;
 }
@@ -32,6 +36,8 @@ function getJudgeInfo(d) {
       let str = d['Commission Date'].split('/');
       month = str[0];
       date = str[1];
+      month = (month.length == 2) ? month : '0'.concat(month);
+      date = (date.length == 2) ? date : '0'.concat(date);
       // DEVELOP THIS FURTHER
       if (d['Appointing President'] === 'Barack Obama' ||
           d['Appointing President'] === 'George W. Bush' ||
@@ -66,13 +72,6 @@ function getJudgeInfo(d) {
     }
   }
 
-  if (d['Judge Name'] === 'Black, Hugo Lafayette') {
-    console.log(d['Commission Date'], d['Termination Date']);
-    console.log('t_year: ', t_year);
-    console.log('c_year: ', c_year);
-    console.log('year: ', year);
-  }
-
   return [
     ['judge', d['Judge Name']],
     ['app_pres', d['Appointing President']],
@@ -88,7 +87,7 @@ function populateRightPanel(n) {
   let lnamel = findCourtData(n)['lname'];
   if (Array.isArray(lnamel)) { lnamel = lnamel[1]; };
 
-  $('#right-header > h1').text(lnamel);     // Make header court name
+  $('#detail-header > h1').text(lnamel);     // Make header court name
   let data = findCourtData(n);              // Get judge data for court
   let data_judges = (toggleAllJudges == false ? data['judges_curr'] : data['judges']);
 
@@ -164,6 +163,12 @@ function populateRightPanel(n) {
       });
 
       s.append('span')
+        .attr('class', function(d) {
+          if (d[0] == 'commission') {
+            return 'mono';
+          }
+          return '';
+        })
         .text(function(d) {
           if (d[0] === 'app_pres_party' || d[0] === 'app_pres') {
             if (d[1] === 'None (assignment)') {
@@ -215,5 +220,9 @@ function populateRightPanel(n) {
       let span = s.select('span');
       // getJudgeLink(d);
     });
+  }, 50);
+
+  setTimeout(function() {
+
   }, 100);
 }

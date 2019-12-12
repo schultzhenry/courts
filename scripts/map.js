@@ -3,10 +3,9 @@
 function drawMap(mapw, maph) {
 
   // Append svg
-  var svg = d3.select("#left-vis").append('svg')
+  var svg = d3.select("#overview-vis").append('svg')
     .attrs({
       id: 'map-vis',
-      class: 'hidden',
       width: 520,
       height: 320
     })
@@ -16,6 +15,7 @@ function drawMap(mapw, maph) {
       transform: "translate("+String((-mapw/2)+20)+","+String((maph/2)-230)+")"
     })
     $('#map-vis').css('pointer-events', 'none');
+    $('#map-vis').hide();
 
   // Draw county and district boundaries
   var path = d3.geoPath();
