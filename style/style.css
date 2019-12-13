@@ -127,7 +127,7 @@ body {
 
 #detail-body {
   width: 900px;
-  height: Calc(100% - 2*Var(--outer-border));
+  height: Calc(100vh - 2*Var(--outer-border));
   margin-top: Var(--outer-border);
   margin-bottom: Var(--outer-border);
   margin-left: auto;
