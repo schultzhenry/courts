@@ -191,4 +191,6 @@ async function loadData() {
 };
 
 loadData();
+setTimeout(function(){ $('#initial-screen').css('opacity', '0'); }, 600);
 setTimeout(function(){ bindInteraction(); }, 700);
+ setTimeout(function(){ $('#initial-screen').hide(); }, 2100);

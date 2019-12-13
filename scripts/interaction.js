@@ -2,16 +2,31 @@
 
 function updatePresidentSelection() {
   $('#judge-party-button').prop('checked', false);
-  $('circle').css('fill', 'gainsboro');
+  $('circle:not(.legend)').css('fill', 'gainsboro');
   $('.Vacant').css('fill', 'none').css('stroke', 'grey');
   setTimeout(function() {
-    if ($('#Donald-J-Trump').is(':checked'))    { $('.Donald-J-Trump').removeClass('nodeDefault').css('fill', 'orangered'); }
-    if ($('#Barack-Obama').is(':checked'))      { $('.Barack-Obama').removeClass('nodeDefault').css('fill', 'deepskyblue'); }
-    if ($('#George-W-Bush').is(':checked'))     { $('.George-W-Bush').removeClass('nodeDefault').css('fill', 'orchid'); }
-    if ($('#William-J-Clinton').is(':checked')) { $('.William-J-Clinton').removeClass('nodeDefault').css('fill', 'mediumblue'); }
-    if ($('#George-HW-Bush').is(':checked'))    { $('.George-HW-Bush').removeClass('nodeDefault').css('fill', 'maroon'); }
-    if ($('#Ronald-Reagan').is(':checked'))     { $('.Ronald-Reagan').removeClass('nodeDefault').css('fill', 'red'); }
+    if ($('#Donald-J-Trump').is(':checked'))    { $('.Donald-J-Trump').removeClass('nodeDefault').css('fill', 'orange'); }
+    if ($('#Barack-Obama').is(':checked'))      { $('.Barack-Obama').removeClass('nodeDefault').css('fill', 'dodgerblue'); }
+    if ($('#George-W-Bush').is(':checked'))     { $('.George-W-Bush').removeClass('nodeDefault').css('fill', 'crimson'); }
+    if ($('#William-J-Clinton').is(':checked')) { $('.William-J-Clinton').removeClass('nodeDefault').css('fill', 'blue'); }
+    if ($('#George-HW-Bush').is(':checked'))    { $('.George-HW-Bush').removeClass('nodeDefault').css('fill', 'darkgreen'); }
+    if ($('#Ronald-Reagan').is(':checked'))     { $('.Ronald-Reagan').removeClass('nodeDefault').css('fill', 'lightgreen'); }
   }, 100);
+}
+
+function clearLegend() {
+  $('.legend-row:not(#legend-info)').remove();
+}
+
+function addLegendRow(t, c) {
+  let row = d3.select('#legend').append('div').attr('class', 'legend-row');
+  let svg = row.append('svg').attrs({ 'width': '10px', 'height': '10px' });
+  if (t === 'Vacant Judgeship') {
+    svg.append('circle').attrs({ 'class': 'legend', 'cx': '5', 'cy': '5', 'r': '4', 'fill': c, 'stroke': 'black' });
+  } else {
+    svg.append('circle').attrs({ 'class': 'legend', 'cx': '5', 'cy': '5', 'r': '4', 'fill': c });
+  }
+  row.append('h2').text(t);
 }
 
 function bindInteraction() {
@@ -21,6 +36,7 @@ function bindInteraction() {
       activeCourt = f2(this.id);
       loadDetail(activeCourt);
       toggleVis('#detail-panel', true);
+      $('#detail-panel').show();
     });
 
     // Handle hovering over districts on map
@@ -110,9 +126,16 @@ function bindInteraction() {
         $('.George-HW-Bush').css('fill', '');
         $('#Ronald-Reagan').prop("checked", false).css('fill', '');
         $('.Ronald-Reagan').css('fill', '');
-        $('circle').removeClass('nodeDefault');
+        $('circle:not(.legend)').removeClass('nodeDefault');
+        clearLegend();
+        addLegendRow('Appointed by Democrat', 'dodgerblue');
+        addLegendRow('Appointed by Republican', 'crimson');
+        addLegendRow('Vacant Judgeship', 'none');
       } else {
-        $('circle').addClass('nodeDefault');
+        clearLegend();
+        $('circle:not(.legend)').addClass('nodeDefault');
+        addLegendRow('Active Judgeship', 'black');
+        addLegendRow('Vacant Judgeship', 'none');
       }
     });
 
@@ -147,12 +170,12 @@ function bindInteraction() {
       } else {
         $(presidentIdList).prop('checked', false);
         updatePresidentSelection();
-        $('circle').addClass('nodeDefault').css('fill', '');
+        $('circle:not(.legend)').addClass('nodeDefault').css('fill', '');
       }
     });
 
     // Toggle preview and detail screens on button clicks
-    $('#about-button').click(function()         { toggleVis('#preview-screen', true); });
-    $('#close-preview-screen').click(function() { toggleVis('#preview-screen', false); });
-    $('#detail-x').click(function()             { toggleVis('#detail-panel', false); });
+    $('#about-button').click(function() { toggleVis('#preview-screen', true); });
+    $('#enter').click(function()        { toggleVis('#preview-screen', false); });
+    $('#detail-x').click(function()     { toggleVis('#detail-panel', false); });
 }

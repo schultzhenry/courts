@@ -27,6 +27,15 @@ body {
   -webkit-box-sizing: border-box;
 }
 
+#initial-screen {
+  transition: all 1.5s;
+  position: fixed;
+  z-index: 3000;
+  width: 100%;
+  height: 100%;
+  background: Var(--border-color);
+}
+
 #preview-screen {
   transition: all 0.1s;
   position: fixed;
@@ -46,14 +55,45 @@ body {
   cursor: pointer;
 }
 
-h3 {
-  font-weight: lighter;
-  font-size: 18px;
+#preview-screen-container {
+  width: 680px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-#preview-screen-container {
-  width: 500px;
-  margin: auto;
+#preview-screen-container h1 {
+  margin: Calc(2*Var(--outer-border)) 0px;
+  padding: Var(--outer-border);
+}
+
+#preview-screen-container h3 {
+  font-size: 22px;
+  font-weight: lighter;
+  line-height: 1.4em;
+  display: inline-block;
+  margin: 0px;
+  padding: Calc(2*Var(--outer-border)) 0px;
+  border-top: 1px solid Var(--line-color);
+  border-bottom: 1px solid Var(--line-color);
+}
+
+#enter {
+  font-size: 30px;
+  letter-spacing: 0.15em;
+  height: 120px;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#enter:hover {
+  text-shadow: 0px 0px 1px black;
+}
+
+#preview-screen-container svg {
+  display: inline-block;
 }
 
 #view {
@@ -81,12 +121,12 @@ h3 {
 #detail-x {
   position: fixed;
   top: Calc(2 * Var(--outer-border));
-  right: Calc((100% - 820px)/2 + Var(--outer-border));
+  right: Calc((100% - 900px)/2 + Var(--outer-border));
   cursor: pointer;
 }
 
 #detail-body {
-  width: 820px;
+  width: 900px;
   height: Calc(100% - 2*Var(--outer-border));
   margin-top: Var(--outer-border);
   margin-bottom: Var(--outer-border);
@@ -141,6 +181,9 @@ h3 {
   border-left: Var(--inner-border) solid Var(--border-color);
 }
 
+#detail-header {
+  padding: Var(--outer-border);
+}
 #court-timeline {
   height: Calc(16*Var(--outer-border));
   border-top: 1px solid Var(--line-color);
@@ -154,7 +197,7 @@ h3 {
 #judge-table-space {
   background: Var(--border-color);
   border-top: 1px solid Var(--line-color);
-  height: Calc(100vh - 25*Var(--outer-border));
+  height: Calc(100vh - 9*Var(--outer-border));
   position: relative;
   overflow-y: scroll;
   margin: auto;
@@ -268,9 +311,8 @@ h2 {
 #legend {
   border-top: 1px solid Var(--line-color);
   padding-top: Var(--outer-border);
-  /* background: Var(--border-color); */
   position: fixed;
-  top: Calc(12 * Var(--outer-border));
+  top: Calc(16 * Var(--outer-border));
   left: Var(--outer-border);
   text-align: left;
   text-shadow:
@@ -282,6 +324,16 @@ h2 {
     2px -2px 1px white,
     -2px 2px 1px white,
      2px 2px 1px white;
+}
+
+#legend-info { padding-bottom: Calc(0.5*Var(--outer-border)); }
+
+.legend-row svg, .legend-row h2 {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  margin-right: Calc(0.25*Var(--outer-border));
+  font-size: 14px;
 }
 
 svg {
@@ -492,6 +544,10 @@ label.footer-button {
   padding-left: 0;
 }
 
+#about-button:hover {
+  text-shadow: 0px 0px 1px black;
+}
+
 #right-panel-button {
   right: 0px;
 }
@@ -548,7 +604,9 @@ a {
   color: black;
 }
 
-a:hover { border-bottom: 1px solid Var(--line-color); }
+a:hover {
+  text-shadow: 0px 0px 1px black;
+}
 
 /* MAKE SURE THIS NODEDEFAULT STYLE IS AT THE BOTTOM  */
 /* IMPORTANT FOR RENDERING JUDGE COLORS APPROPRIATELY */
