@@ -4,7 +4,6 @@
 // VIEW DEFAULTS
 var toggleAllJudges = false;
 var detailPanelOpen = false;
-var mapOpen = false;
 var activeCourt = '';
 
 // VIEW CONSTANTS
@@ -25,6 +24,3 @@ var presJ = Array(presidentIdList.length).fill(0);
 function f(s) { return s.replace(/ /g, '-'); }
 function f2(s) { return s.replace(/\-/g, ' '); }
 function f3(s) { return s.replace(/\./g, ''); }
-
-// TOGGLE OBJECT VISIBILITY
-function toggleVis(t) { if ($(t).is(":visible")) { $(t).hide(); } else { $(t).show(); } }

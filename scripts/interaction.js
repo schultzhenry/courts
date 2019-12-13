@@ -35,15 +35,11 @@ function bindInteraction() {
     $('.court').click(function() {
       activeCourt = f2(this.id);
       loadDetail(activeCourt);
-      toggleVis('#detail-panel');
       $('#detail-panel').show();
     });
 
     // Handle hovering over districts on map
     $(document).on('mouseenter','.district', function (event) {
-
-      // Do nothing if map inactive
-      if (!mapOpen) { return; }
 
       // Save tag name
       let tag = $(this).get(0).tagName;
@@ -74,9 +70,6 @@ function bindInteraction() {
 
     }).on('mouseleave','.district',  function() {
 
-      // Do nothing if map inactive
-      if (!mapOpen) { return; }
-
       // Remove grey from courts
       $('.judges-thumbnail').removeClass('inactive-hover');
       $('.court-label').removeClass('inactive-hover');
@@ -101,15 +94,8 @@ function bindInteraction() {
     });
 
     $('#map-button').click(function() {
-      if (!$(this).is(':checked')) {
-        mapOpen = false;
-        $('#map-vis').css('pointer-events', 'none');
-        $('#map-vis').hide();
-      } else {
-        mapOpen = true;
-        $('#map-vis').css('pointer-events', 'all');
-        $('#map-vis').show();
-      }
+      $('#map-vis').toggle();
+      $('#map-vis').css('pointer-events', (($(this).is(':checked')) ? 'all' : 'none'));
     });
 
     $('#judge-party-button').click(function() {
@@ -175,7 +161,7 @@ function bindInteraction() {
     });
 
     // Toggle preview and detail screens on button clicks
-    $('#about-button').click(function() { toggleVis('#preview-screen'); });
-    $('#enter').click(function()        { toggleVis('#preview-screen'); });
-    $('#detail-x').click(function()     { toggleVis('#detail-panel'); });
+    $('#about-button').click(function() { $('#preview-screen').toggle(); });
+    $('#enter').click(function()        { $('#preview-screen').toggle(); });
+    $('#detail-x').click(function()     { $('#detail-panel').toggle(); });
 }

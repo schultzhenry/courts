@@ -1,9 +1,10 @@
-// LOAD AND TRANSFORM CSV DATA
+// LOAD.JS: LOAD AND TRANSFORM CSV DATA
+// FOR THE FEDERAL JUDICIARY INTERACTIVE VISUALIZATION
 
 // DATA SOURCE: FEDERAL JUDICIAL CENTER
 // fjc.gov/history/judges/biographical-directory-article-iii-federal-judges-export
 
-$('#detail-panel').hide();
+$('#detail-panel').toggle();
 
 async function loadData() {
   // LOAD CSV JUDGE DATA
