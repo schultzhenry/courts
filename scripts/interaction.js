@@ -35,7 +35,7 @@ function bindInteraction() {
     $('.court').click(function() {
       activeCourt = f2(this.id);
       loadDetail(activeCourt);
-      toggleVis('#detail-panel', true);
+      toggleVis('#detail-panel');
       $('#detail-panel').show();
     });
 
@@ -175,7 +175,7 @@ function bindInteraction() {
     });
 
     // Toggle preview and detail screens on button clicks
-    $('#about-button').click(function() { toggleVis('#preview-screen', true); });
-    $('#enter').click(function()        { toggleVis('#preview-screen', false); });
-    $('#detail-x').click(function()     { toggleVis('#detail-panel', false); });
+    $('#about-button').click(function() { toggleVis('#preview-screen'); });
+    $('#enter').click(function()        { toggleVis('#preview-screen'); });
+    $('#detail-x').click(function()     { toggleVis('#detail-panel'); });
 }

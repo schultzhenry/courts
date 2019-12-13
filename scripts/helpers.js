@@ -27,4 +27,4 @@ function f2(s) { return s.replace(/\-/g, ' '); }
 function f3(s) { return s.replace(/\./g, ''); }
 
 // TOGGLE OBJECT VISIBILITY
-function toggleVis(t,b) { if (b) { $(t).show(); } else { $(t).hide(); } }
+function toggleVis(t) { if ($(t).is(":visible")) { $(t).hide(); } else { $(t).show(); } }
